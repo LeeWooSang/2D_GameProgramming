@@ -18,6 +18,18 @@
     <Filter Include="Code\D2DManager">
       <UniqueIdentifier>{26091474-bbe9-4e84-97b1-b07081fbf6a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Code\GameObject">
+      <UniqueIdentifier>{f3d98d4d-a1e2-4046-9551-a7f380465e5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\GameObject\Player">
+      <UniqueIdentifier>{e36a03a9-d7b4-40b8-a618-b9957aea1144}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\Scene">
+      <UniqueIdentifier>{d0f96827-61ca-4d23-a12a-a79952283ce1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\Scene\InGameScene">
+      <UniqueIdentifier>{ba7b0cc2-bfd2-4976-a6ad-ca53257d46b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Main.cpp">
@@ -31,6 +43,21 @@
     </ClCompile>
     <ClCompile Include="..\Code\D2DManager\D2DManager.cpp">
       <Filter>Code\D2DManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GameObject\GameObject.cpp">
+      <Filter>Code\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GameObject\Player\Player.cpp">
+      <Filter>Code\GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Scene\SceneManager.cpp">
+      <Filter>Code\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Scene\Scene.cpp">
+      <Filter>Code\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Scene\InGameScene\InGameScene.cpp">
+      <Filter>Code\Scene\InGameScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +78,21 @@
     </ClInclude>
     <ClInclude Include="..\Code\D2DManager\D2DManager.h">
       <Filter>Code\D2DManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\GameObject\GameObject.h">
+      <Filter>Code\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\GameObject\Player\Player.h">
+      <Filter>Code\GameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Scene\SceneManager.h">
+      <Filter>Code\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Scene\Scene.h">
+      <Filter>Code\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Scene\InGameScene\InGameScene.h">
+      <Filter>Code\Scene\InGameScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

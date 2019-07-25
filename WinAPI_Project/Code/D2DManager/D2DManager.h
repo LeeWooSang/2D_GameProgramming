@@ -7,6 +7,8 @@ constexpr int MAX_COLOR_COUNT = 8;
 
 struct ImageInfo
 {
+	ImageInfo()
+		: m_FilePath(L""), m_Bitmap(nullptr), m_Pos{ 0 }, m_WidthPixel(0), m_HeightPixel(0), m_TotalFrameX(0), m_TotalFrameY(0), m_FrameXNum(0), m_FrameYNum(0) {}
 	ImageInfo(wstring path, D2D1_RECT_F& pos, int width, int height, int totalX, int totalY, int frameX, int frameY)
 		: m_FilePath(path), m_Bitmap(nullptr), m_Pos(pos), m_WidthPixel(width), m_HeightPixel(height), m_TotalFrameX(totalX), m_TotalFrameY(totalY), m_FrameXNum(frameX), m_FrameYNum(frameY) {}
 
@@ -47,26 +49,29 @@ class D2DManager
 	SINGLE_TONE(D2DManager)
 
 	bool Initialize(HWND);
+	bool CreateBitmapImage(string, ImageInfo);
 
 	void Render();
-	void Render(string key);
-	void Render(string key, D2D1_RECT_F pos, int fx, int fy);
-	void Render(string key, string color, wstring text, D2D1_RECT_F pos);
+	void Render(string);
+	void Render(string, D2D1_RECT_F, int, int );
+	void Render(string, string, wstring, D2D1_RECT_F);
+
+	 ID2D1HwndRenderTarget* GetRenderTarget() const { return m_pRenderTarget; }
+
+	 ImageInfo& GetImageInfo(string key) { return m_ImageInfoMap[key]; }
 
 private:
-	void CreateBitmapImage(ImageInfo info, string key);
 	void CreateGameFont();
 	void CreateGameFontColor();
 
 	ID2D1Factory3*						m_pFactory;
-	ID2D1Device2*						m_pDevice;
+	// 렌더타겟
+	ID2D1HwndRenderTarget*	m_pRenderTarget;
 	// D2DManager로 텍스트를 그리기 위한 팩토리
 	IDWriteFactory5*					m_pWriteFactory;
 	IDWriteFontCollection1*		m_pFontCollection;
 	// D2DManager로 이미지를 그리기 위한 팩토리
 	IWICImagingFactory*			m_pWICImagingFactory;
-	// 렌더타겟
-	ID2D1HwndRenderTarget*	m_pRenderTarget;
 
 	// 이미지를 저장함
 	unordered_map<string, ImageInfo>						m_ImageInfoMap;
