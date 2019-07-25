@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Code">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Code\Core">
+      <UniqueIdentifier>{fd42b727-8461-419c-97fc-1b7a7b8aa207}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\Framework">
+      <UniqueIdentifier>{35e8a0c2-017d-4955-b62a-b830026b2135}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\D2DManager">
+      <UniqueIdentifier>{26091474-bbe9-4e84-97b1-b07081fbf6a7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Code\Main.cpp">
+      <Filter>Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Core\Core.cpp">
+      <Filter>Code\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Framework\Framework.cpp">
+      <Filter>Code\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\D2DManager\D2DManager.cpp">
+      <Filter>Code\D2DManager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Code\Core\Core.h">
+      <Filter>Code\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Default\Resource.h">
+      <Filter>리소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Framework\Framework.h">
+      <Filter>Code\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Defines.h">
+      <Filter>Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Macro.h">
+      <Filter>Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\D2DManager\D2DManager.h">
+      <Filter>Code\D2DManager</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Code\Default\icon1.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Code\Default\WinAPI_Project.aps">
+      <Filter>리소스 파일</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\Code\Default\WinAPI_Project.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
