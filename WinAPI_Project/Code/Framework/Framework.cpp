@@ -1,15 +1,23 @@
 #include "Framework.h"
 #include "../D2DManager/D2DManager.h"
 #include "../Scene/SceneManager.h"
+#include "../GameTimer/GameTimer.h"
 
 INIT_INSTACNE(Framework)
 
 Framework::Framework()
+	: m_pTimer(nullptr)
 {
 }
 
 Framework::~Framework()
 {
+	if (m_pTimer != nullptr)
+	{
+		m_pTimer->Stop();
+		SAFE_DELETE(m_pTimer)
+	}
+
 	GET_INSTANCE(D2DManager)->Release();
 	GET_INSTANCE(SceneManager)->Release();
 
@@ -18,29 +26,42 @@ Framework::~Framework()
 
 bool Framework::Initialize(HWND hwnd)
 {
+	m_pTimer = new GameTimer;
+
 	if (GET_INSTANCE(D2DManager)->Initialize(hwnd) == false)
 		return false;
 
 	if (GET_INSTANCE(SceneManager)->Initialize() == false)
 		return false;
 
+	m_pTimer->Reset();
+
 	return true;
 }
 
 void Framework::Run()
 {
-	Update();
-	Render();
+	float elapsedTime = 0.f;
+
+	if (m_pTimer)
+	{
+		m_pTimer->Tick(60);
+		elapsedTime = m_pTimer->GetElapsedTime();
+
+		Update(elapsedTime);
+		Render();
+	}
 }
 
-void Framework::Update()
+void Framework::Update(float elapsedTime)
 {
-	GET_INSTANCE(SceneManager)->Update();
+	GET_INSTANCE(SceneManager)->Update(elapsedTime);
 }
 
 void Framework::Render()
 {
 	GET_INSTANCE(D2DManager)->GetRenderTarget()->BeginDraw();
+
 	D2D1_COLOR_F clearcolor = D2D1_COLOR_F{ 1.f, 1.f, 1.f, 1.f };
 	GET_INSTANCE(D2DManager)->GetRenderTarget()->Clear(&clearcolor);
 

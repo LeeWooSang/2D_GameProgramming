@@ -13,6 +13,8 @@
 #include <thread>
 using namespace std;
 
+#include <math.h>
+
 #include "Default/Resource.h"
 
 //다이렉트 2D 헤더

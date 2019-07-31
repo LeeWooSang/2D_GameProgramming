@@ -7,7 +7,7 @@ class SceneManager
 	SINGLE_TONE(SceneManager)
 
 	bool Initialize();
-	void Update();
+	void Update(float);
 	void Render();
 
 private:

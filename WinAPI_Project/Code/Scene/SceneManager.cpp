@@ -30,11 +30,11 @@ bool SceneManager::Initialize()
 	return true;
 }
 
-void SceneManager::Update()
+void SceneManager::Update(float elapsedTime)
 {
 	for (auto iter = m_SceneList.begin(); iter != m_SceneList.end(); ++iter)
 	{
-		(*iter).second->Update();
+		(*iter).second->Update(elapsedTime);
 	}
 }
 

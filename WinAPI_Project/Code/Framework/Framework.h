@@ -10,6 +10,8 @@ class Framework
 	void Run();
 
 private:
-	void Update();
+	void Update(float);
 	void Render();
+
+	class GameTimer* m_pTimer;
 };

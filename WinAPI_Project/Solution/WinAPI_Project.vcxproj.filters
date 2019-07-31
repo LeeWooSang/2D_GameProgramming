@@ -30,6 +30,12 @@
     <Filter Include="Code\Scene\InGameScene">
       <UniqueIdentifier>{ba7b0cc2-bfd2-4976-a6ad-ca53257d46b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Code\GameTimer">
+      <UniqueIdentifier>{0b9bc88f-ba45-4f04-93ab-67034c9678ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\Input">
+      <UniqueIdentifier>{8eab93c2-f62b-4863-be88-6f7bccc584e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Main.cpp">
@@ -58,6 +64,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Scene\InGameScene\InGameScene.cpp">
       <Filter>Code\Scene\InGameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GameTimer\GameTimer.cpp">
+      <Filter>Code\GameTimer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Input\Input.cpp">
+      <Filter>Code\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +105,12 @@
     </ClInclude>
     <ClInclude Include="..\Code\Scene\InGameScene\InGameScene.h">
       <Filter>Code\Scene\InGameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\GameTimer\GameTimer.h">
+      <Filter>Code\GameTimer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Input\Input.h">
+      <Filter>Code\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -9,7 +9,7 @@ InGameScene::InGameScene()
 
 InGameScene::~InGameScene()
 {
-	Release();
+	//Release();
 	cout << "InGameScene ¼Ò¸êÀÚ" << endl;
 }
 
@@ -22,10 +22,10 @@ bool InGameScene::Initialize()
 	return true;
 }
 
-void InGameScene::Update()
+void InGameScene::Update(float elapsedTime)
 {
 	if (m_pPlayer != nullptr)
-		m_pPlayer->Update();
+		m_pPlayer->Update(elapsedTime);
 }
 
 void InGameScene::Render()

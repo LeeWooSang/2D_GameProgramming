@@ -1,5 +1,7 @@
 #include "Core.h"
 #include "../Framework/Framework.h"
+#include <crtdbg.h>
+#include "../Input/Input.h"
 
 INIT_INSTACNE(Core)
 bool Core::m_isUpdate = true;
@@ -7,11 +9,23 @@ bool Core::m_isUpdate = true;
 Core::Core()
 	: m_hInstance(nullptr), m_hWnd(nullptr), m_ClassName(L"MapleStory")
 {
+	// 메모리 릭이 있는지 체크를 해준다.
+	// 릭이 있으면, 번호를 출력해준다.
+	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+	// 출력된 번호를 넣어주면 그 지점으로 바로 이동시켜준다.
+	// [ 예시 ]
+	// Detected memory leaks!
+	//	Dumping objects ->
+	// {233} normal block at 0x000001469D91A680, 24 bytes long.
+	// 233 이라는 지점에서 릭이 생김	
+	//_CrtSetBreakAlloc(233);
 }
 
 Core::~Core()
 {
 	GET_INSTANCE(Framework)->Release();
+	GET_INSTANCE(Input)->Release();
 
 	cout << "Core - 소멸자" << endl;
 }
@@ -42,6 +56,9 @@ bool Core::Initialize(HINSTANCE hInst)
 	SetWindowPos(m_hWnd, HWND_TOPMOST, posX, posY, rc.right - rc.left, rc.bottom - rc.top, SWP_NOMOVE | SWP_NOZORDER);
 
 	if (GET_INSTANCE(Framework)->Initialize(m_hWnd) == false)
+		return false;
+
+	if (GET_INSTANCE(Input)->Initialize() == false)
 		return false;
 
 	::ShowWindow(m_hWnd, SW_SHOW);
@@ -106,6 +123,19 @@ LRESULT Core::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case WM_DESTROY:
 			m_isUpdate = false;
 			::PostQuitMessage(0);
+			break;
+
+		case WM_KEYDOWN:
+		case WM_KEYUP:
+			//Alt키 눌렀을 때, 멈추는 현상을 해결하기위해
+		case WM_SYSKEYDOWN:
+		case WM_SYSKEYUP:
+		case WM_LBUTTONDOWN:
+		case WM_LBUTTONUP:
+		case WM_RBUTTONDOWN:
+		case WM_RBUTTONUP:
+		case WM_MOUSEMOVE:
+			GET_INSTANCE(Input)->ProcessWindowMessage(hWnd, message, wParam, lParam);
 			break;
 
 		default:

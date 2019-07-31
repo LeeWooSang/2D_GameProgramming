@@ -9,7 +9,7 @@ public:
 	virtual ~InGameScene();
 
 	virtual bool Initialize() override;
-	virtual void Update() override;
+	virtual void Update(float) override;
 	virtual void Render() override;
 	virtual void Release() override;
 
