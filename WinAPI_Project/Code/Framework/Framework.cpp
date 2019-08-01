@@ -2,6 +2,7 @@
 #include "../D2DManager/D2DManager.h"
 #include "../Scene/SceneManager.h"
 #include "../GameTimer/GameTimer.h"
+#include "../Input/Input.h"
 
 INIT_INSTACNE(Framework)
 
@@ -66,6 +67,17 @@ void Framework::Render()
 	GET_INSTANCE(D2DManager)->GetRenderTarget()->Clear(&clearcolor);
 
 	GET_INSTANCE(SceneManager)->Render();
+
+	D2D1_RECT_F pos;
+	float x = 200;
+	float y = 200;
+	int sizeX = 100;
+	int sizeY = 100;
+	pos = { x, y, x + sizeX, y + sizeY };
+	//wstring wstr = L"시발롬아";
+
+	if(GET_INSTANCE(Input)->GetText().size() > 0)
+		GET_INSTANCE(D2DManager)->Render(GET_INSTANCE(Input)->GetText(), "메이플", "검은색", pos);
 
 	GET_INSTANCE(D2DManager)->GetRenderTarget()->EndDraw();
 }

@@ -125,6 +125,9 @@ LRESULT Core::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			::PostQuitMessage(0);
 			break;
 
+		case WM_IME_COMPOSITION:
+		case WM_IME_NOTIFY:			// 한자입력...
+		case WM_CHAR:				// 1byte 문자 (ex : 영어)
 		case WM_KEYDOWN:
 		case WM_KEYUP:
 			//Alt키 눌렀을 때, 멈추는 현상을 해결하기위해

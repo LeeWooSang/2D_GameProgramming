@@ -49,12 +49,12 @@ class D2DManager
 	SINGLE_TONE(D2DManager)
 
 	bool Initialize(HWND);
-	bool CreateBitmapImage(string, ImageInfo);
+	bool CreateBitmapImage(const string&, ImageInfo);
 
 	void Render();
-	void Render(string);
-	void Render(string, D2D1_RECT_F, int, int );
-	void Render(string, string, wstring, D2D1_RECT_F);
+	void Render(const string&);
+	void Render(const string&, D2D1_RECT_F&, int, int );
+	void Render(const wstring&, const string&, const string&, D2D1_RECT_F&);
 
 	 ID2D1HwndRenderTarget* GetRenderTarget() const { return m_pRenderTarget; }
 

@@ -77,10 +77,13 @@ bool D2DManager::Initialize(HWND hwnd)
 	if (result != S_OK)
 		return false;
 
+	CreateGameFont();
+	CreateGameFontColor();
+
 	return true;
 }
 
-bool D2DManager::CreateBitmapImage(string key, ImageInfo info)
+bool D2DManager::CreateBitmapImage(const string& key, ImageInfo info)
 {
 	// [ Bitmap 이미지 초기화 방법 ] 
 	// 1. Com객체 초기화
@@ -129,7 +132,7 @@ bool D2DManager::CreateBitmapImage(string key, ImageInfo info)
 void D2DManager::CreateGameFont()
 {
 	// 폰트 경로
-	wstring fontPath[] = { L"../Resource/Font/a피오피동글.ttf", L"../Resource/Font/메이플스토리.ttf" };
+	wstring fontPath[] = { L"../Resource/Fonts/a피오피동글.ttf", L"../Resource/Fonts/메이플스토리.ttf" };
 
 	// 폰트를 직접 설치할때 사용
 	//AddFontResourceEx(fontPath[0].c_str(), FR_PRIVATE, 0);
@@ -177,11 +180,7 @@ void D2DManager::CreateGameFont()
 		pFontSet[i]->Release();
 	}
 
-	float dx = ((float)FRAME_BUFFER_WIDTH / (float)1280);
-	float dy = ((float)FRAME_BUFFER_HEIGHT / (float)720);
-
-	float dTotal = dx * dy;
-	float fontSize = (25.f * dTotal);
+	float fontSize = 25.f;
 
 	// 폰트 객체
 	IDWriteTextFormat* pFont[MAX_FONT_COUNT];
@@ -250,7 +249,7 @@ void D2DManager::Render()
 		m_pRenderTarget->DrawBitmap((*iter).second.m_Bitmap, (*iter).second.m_Pos);
 }
 
-void D2DManager::Render(string key)
+void D2DManager::Render(const string& key)
 {
 	auto iter = m_ImageInfoMap.find(key);
 	if (iter != m_ImageInfoMap.end())
@@ -280,7 +279,7 @@ void D2DManager::Render(string key)
 	}
 }
 
-void D2DManager::Render(string key, D2D1_RECT_F pos, int fx, int fy)
+void D2DManager::Render(const string& key, D2D1_RECT_F& pos, int fx, int fy)
 {
 	auto iter = m_ImageInfoMap.find(key);
 	if (iter != m_ImageInfoMap.end())
@@ -307,7 +306,7 @@ void D2DManager::Render(string key, D2D1_RECT_F pos, int fx, int fy)
 	}
 }
 
-void D2DManager::Render(string font, string color, wstring text, D2D1_RECT_F pos)
+void D2DManager::Render(const wstring& text, const string& font, const string& color, D2D1_RECT_F& pos)
 {
 	m_pRenderTarget->DrawTextW(text.c_str(), text.length(), m_FontInfoMap[font].m_pFont, &pos, m_FontColorMap[color]);
 }
