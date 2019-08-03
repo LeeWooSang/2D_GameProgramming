@@ -36,6 +36,9 @@
     <Filter Include="Code\Input">
       <UniqueIdentifier>{8eab93c2-f62b-4863-be88-6f7bccc584e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Code\Network">
+      <UniqueIdentifier>{8141bf58-f271-4551-a9fc-c408bb2cefd8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Main.cpp">
@@ -70,6 +73,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Input\Input.cpp">
       <Filter>Code\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Network\Network.cpp">
+      <Filter>Code\Network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -111,6 +117,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\Input\Input.h">
       <Filter>Code\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Network\Network.h">
+      <Filter>Code\Network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

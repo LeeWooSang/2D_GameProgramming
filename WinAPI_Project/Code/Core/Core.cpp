@@ -1,7 +1,8 @@
 #include "Core.h"
-#include "../Framework/Framework.h"
 #include <crtdbg.h>
+#include "../Framework/Framework.h"
 #include "../Input/Input.h"
+#include "../Network/Network.h"
 
 INIT_INSTACNE(Core)
 bool Core::m_isUpdate = true;
@@ -26,6 +27,7 @@ Core::~Core()
 {
 	GET_INSTANCE(Framework)->Release();
 	GET_INSTANCE(Input)->Release();
+	GET_INSTANCE(Network)->Release();
 
 	cout << "Core - 소멸자" << endl;
 }
@@ -59,6 +61,9 @@ bool Core::Initialize(HINSTANCE hInst)
 		return false;
 
 	if (GET_INSTANCE(Input)->Initialize() == false)
+		return false;
+
+	if (GET_INSTANCE(Network)->Initialize() == false)
 		return false;
 
 	::ShowWindow(m_hWnd, SW_SHOW);
@@ -96,14 +101,14 @@ int Core::Run()
 	{
 		if (::PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
+			if (msg.message == WM_QUIT)
+				break;
+
 			::TranslateMessage(&msg);
 			::DispatchMessage(&msg);
 		}
 		else
-		{
 			GET_INSTANCE(Framework)->Run();
-		}
-
 	}
 
 	GET_INSTANCE(Core)->Release();
@@ -134,9 +139,11 @@ LRESULT Core::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			// IME 사용
 		case WM_IME_COMPOSITION:
-		case WM_IME_NOTIFY:			// 한자입력...
+			// 한자입력...
+		case WM_IME_NOTIFY:			
 			// 영문 입력
-		case WM_CHAR:				// 1byte 문자 (ex : 영어)
+			// 1byte 문자 (ex : 영어)
+		case WM_CHAR:				
 			// 키 입력
 		case WM_KEYDOWN:
 		case WM_KEYUP:
@@ -149,6 +156,11 @@ LRESULT Core::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case WM_RBUTTONUP:
 		case WM_MOUSEMOVE:
 			GET_INSTANCE(Input)->ProcessWindowMessage(hWnd, message, wParam, lParam);
+			break;
+
+			// Network의 Recv처리
+		case WM_SOCKET:
+			GET_INSTANCE(Network)->ProcessWindowMessage(wParam, lParam);
 			break;
 
 		default:

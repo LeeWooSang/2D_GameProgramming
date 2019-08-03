@@ -68,6 +68,10 @@ LRESULT Input::ProcessKeyboardMessage(HWND hWnd, UINT message, WPARAM wParam, LP
 			case VK_RETURN:
 				m_IsActive = !m_IsActive;
 				break;
+
+			case VK_ESCAPE:
+				::PostQuitMessage(0);
+				break;
 			}
 		}
 	}

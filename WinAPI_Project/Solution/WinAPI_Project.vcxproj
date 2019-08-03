@@ -159,6 +159,7 @@
     <ClCompile Include="..\Code\GameTimer\GameTimer.cpp" />
     <ClCompile Include="..\Code\Input\Input.cpp" />
     <ClCompile Include="..\Code\Main.cpp" />
+    <ClCompile Include="..\Code\Network\Network.cpp" />
     <ClCompile Include="..\Code\Scene\InGameScene\InGameScene.cpp" />
     <ClCompile Include="..\Code\Scene\Scene.cpp" />
     <ClCompile Include="..\Code\Scene\SceneManager.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="..\Code\GameTimer\GameTimer.h" />
     <ClInclude Include="..\Code\Input\Input.h" />
     <ClInclude Include="..\Code\Macro.h" />
+    <ClInclude Include="..\Code\Network\Network.h" />
     <ClInclude Include="..\Code\Scene\InGameScene\InGameScene.h" />
     <ClInclude Include="..\Code\Scene\Scene.h" />
     <ClInclude Include="..\Code\Scene\SceneManager.h" />

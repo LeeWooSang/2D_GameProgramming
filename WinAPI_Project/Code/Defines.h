@@ -1,9 +1,11 @@
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+#define WM_SOCKET WM_USER + 1
+
 #pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
 
 #include <iostream>
-#include <Windows.h>
 #include <string>
 #include <vector>
 #include <list>
@@ -14,8 +16,12 @@
 #include <thread>
 using namespace std;
 
-#include <math.h>
+#include <WinSock2.h>
+#pragma comment(lib, "ws2_32.lib")
 
+#include <Windows.h>
+
+#include <math.h>
 #include "Default/Resource.h"
 
 //다이렉트 2D 헤더
