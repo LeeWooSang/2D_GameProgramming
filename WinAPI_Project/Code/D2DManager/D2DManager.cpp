@@ -47,7 +47,7 @@ D2DManager::~D2DManager()
 	cout << "D2DManager - 家戈磊" << endl;
 }
 
-bool D2DManager::Initialize(HWND hwnd)
+bool D2DManager::Initialize(HWND hWnd)
 {
 	// D2DManager Factory 积己
 	HRESULT result = ::D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_pFactory);
@@ -62,7 +62,7 @@ bool D2DManager::Initialize(HWND hwnd)
 	// 坊歹鸥百 积己
 	D2D1_SIZE_U size = D2D1::SizeU(FRAME_BUFFER_WIDTH, FRAME_BUFFER_HEIGHT);
 	D2D1_RENDER_TARGET_PROPERTIES d2dRTProps = D2D1::RenderTargetProperties();
-	D2D1_HWND_RENDER_TARGET_PROPERTIES d2dHwndRTProps = D2D1::HwndRenderTargetProperties(hwnd, size, D2D1_PRESENT_OPTIONS_IMMEDIATELY);
+	D2D1_HWND_RENDER_TARGET_PROPERTIES d2dHwndRTProps = D2D1::HwndRenderTargetProperties(hWnd, size, D2D1_PRESENT_OPTIONS_IMMEDIATELY);
 	result = m_pFactory->CreateHwndRenderTarget(d2dRTProps, d2dHwndRTProps, &m_pRenderTarget);
 	if (result != S_OK)
 		return false;

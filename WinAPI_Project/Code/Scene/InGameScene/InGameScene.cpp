@@ -9,7 +9,7 @@ InGameScene::InGameScene()
 
 InGameScene::~InGameScene()
 {
-	//Release();
+	Release();
 	cout << "InGameScene ¼Ò¸êÀÚ" << endl;
 }
 

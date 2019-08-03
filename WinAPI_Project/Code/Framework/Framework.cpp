@@ -25,11 +25,13 @@ Framework::~Framework()
 	cout << "Framework - 소멸자" << endl;
 }
 
-bool Framework::Initialize(HWND hwnd)
+bool Framework::Initialize(HWND hWnd)
 {
+	m_hWnd = hWnd;
+
 	m_pTimer = new GameTimer;
 
-	if (GET_INSTANCE(D2DManager)->Initialize(hwnd) == false)
+	if (GET_INSTANCE(D2DManager)->Initialize(hWnd) == false)
 		return false;
 
 	if (GET_INSTANCE(SceneManager)->Initialize() == false)
@@ -68,16 +70,18 @@ void Framework::Render()
 
 	GET_INSTANCE(SceneManager)->Render();
 
-	D2D1_RECT_F pos;
 	float x = 200;
-	float y = 200;
-	int sizeX = 100;
+	float y = 500;
+	int sizeX = 500;
 	int sizeY = 100;
-	pos = { x, y, x + sizeX, y + sizeY };
-	//wstring wstr = L"시발롬아";
+	D2D1_RECT_F textPos = { x, y, x + sizeX, y + sizeY };
+	
+	size_t len = GET_INSTANCE(Input)->GetText().length();
+	float fontSize = 20.f;
+	D2D1_RECT_F combPos = { x + fontSize * len, y, x + fontSize * len, y + sizeY };
 
-	if(GET_INSTANCE(Input)->GetText().size() > 0)
-		GET_INSTANCE(D2DManager)->Render(GET_INSTANCE(Input)->GetText(), "메이플", "검은색", pos);
-
+	GET_INSTANCE(D2DManager)->Render(GET_INSTANCE(Input)->GetComb(), "메이플", "검은색", combPos);
+	GET_INSTANCE(D2DManager)->Render(GET_INSTANCE(Input)->GetText(), "메이플", "검은색", textPos);
+		
 	GET_INSTANCE(D2DManager)->GetRenderTarget()->EndDraw();
 }

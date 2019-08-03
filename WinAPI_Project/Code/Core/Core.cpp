@@ -11,7 +11,7 @@ Core::Core()
 {
 	// 메모리 릭이 있는지 체크를 해준다.
 	// 릭이 있으면, 번호를 출력해준다.
-	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	// 출력된 번호를 넣어주면 그 지점으로 바로 이동시켜준다.
 	// [ 예시 ]
@@ -19,7 +19,7 @@ Core::Core()
 	//	Dumping objects ->
 	// {233} normal block at 0x000001469D91A680, 24 bytes long.
 	// 233 이라는 지점에서 릭이 생김	
-	//_CrtSetBreakAlloc(233);
+	//_CrtSetBreakAlloc(265);
 }
 
 Core::~Core()
@@ -100,7 +100,10 @@ int Core::Run()
 			::DispatchMessage(&msg);
 		}
 		else
+		{
 			GET_INSTANCE(Framework)->Run();
+		}
+
 	}
 
 	GET_INSTANCE(Core)->Release();
@@ -115,19 +118,26 @@ LRESULT Core::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	switch (message)
 	{
+		case WM_CREATE:
+			break;
+
+		case WM_DESTROY:
+			m_isUpdate = false;
+			//캐럿 삭제
+			::PostQuitMessage(0);
+			break;
+
 		case WM_PAINT:
 			hdc = ::BeginPaint(hWnd, &ps);
 			EndPaint(hWnd, &ps);
 			break;
 
-		case WM_DESTROY:
-			m_isUpdate = false;
-			::PostQuitMessage(0);
-			break;
-
+			// IME 사용
 		case WM_IME_COMPOSITION:
 		case WM_IME_NOTIFY:			// 한자입력...
+			// 영문 입력
 		case WM_CHAR:				// 1byte 문자 (ex : 영어)
+			// 키 입력
 		case WM_KEYDOWN:
 		case WM_KEYUP:
 			//Alt키 눌렀을 때, 멈추는 현상을 해결하기위해

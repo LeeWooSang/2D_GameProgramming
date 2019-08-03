@@ -14,4 +14,6 @@ private:
 	void Render();
 
 	class GameTimer* m_pTimer;
+
+	HWND m_hWnd;
 };

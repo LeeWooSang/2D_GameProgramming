@@ -4,6 +4,15 @@
 
 constexpr int MAX_LEN = 256;
 
+struct TextInfo
+{
+	TextInfo(unsigned char key, const wstring& text)
+		: m_Key(key), m_Text(text) {}
+
+	unsigned char m_Key;
+	wstring m_Text;
+};
+
 class Input
 {
 	SINGLE_TONE(Input)
@@ -15,17 +24,22 @@ class Input
 	LRESULT ProcessKeyboardMessage(HWND, UINT, WPARAM, LPARAM);
 	void ProcessMouseMessage(HWND, UINT, WPARAM, LPARAM);
 
-	void SetText(const wstring& text) { m_Chatting += text; }
-	const wstring& GetText() const { return m_Chatting; }
+	void ProcessEnglish(HWND, WPARAM);
+	void ProcessKorean(HWND, LPARAM);
 
-	void ConvertString();
+	void DeleteText();
 	void ChangeIMEMode(HWND, bool);
+	void ControlCaret(WPARAM);
+
+	const wstring& GetComb() const { return m_Comb; }
+	wstring GetText() const;
+
+	enum IMEMODE { ENGLISH = 0x0000, KOREAN };
 
 private:
-	char m_Text[MAX_LEN];
-	char m_CombinationText[10];
-
-	wstring m_Chatting;
-
-	bool m_Mode;
+	unsigned long m_IMEMode;
+	bool m_IsActive;
+	wstring m_Comb;
+	list<TextInfo> m_TextList;
+	unsigned char m_CaretPos;
 };

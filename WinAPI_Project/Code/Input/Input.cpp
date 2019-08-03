@@ -8,15 +8,18 @@ INIT_INSTACNE(Input)
 
 Input::Input()
 {
-	strcpy(m_Text, "");
-	strcpy(m_CombinationText, "");
-	m_Chatting = L"";
-
-	m_Mode = false;
+	m_IMEMode = IMEMODE::ENGLISH;
+	m_IsActive = false;
+	m_Comb = L"";
+	m_TextList.clear();
+	m_CaretPos = 0;
 }
 
 Input::~Input()
 {
+	m_TextList.clear();
+
+	cout << "Input - 소멸자" << endl;
 }
 
 bool Input::Initialize()
@@ -56,121 +59,179 @@ LRESULT Input::ProcessWindowMessage(HWND hWnd, UINT message, WPARAM wParam, LPAR
 
 LRESULT Input::ProcessKeyboardMessage(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	int len = 0;
-	// IME 핸들
-	HIMC m_hIMC = nullptr;   
-
-	//D2D1_RECT_F pos;
-	//float x = 200;
-	//float y = 200;
-	//int sizeX = 100;
-	//int sizeY = 100;
-	//pos = { x, y, x + sizeX, y + sizeY };
-
-	//GET_INSTANCE(D2DManager)->Render(L"ㅎㅇ", "메이플", "검은색", pos);
-
 	switch (message)
 	{
-	case WM_KEYDOWN:
-	case WM_KEYUP:
-		switch (wParam)
+		case WM_KEYUP:
 		{
-		case VK_HANGEUL:
-			m_Mode = !m_Mode;
-			ChangeIMEMode(hWnd, m_Mode);
+			switch (wParam)
+			{
+			case VK_RETURN:
+				m_IsActive = !m_IsActive;
+				break;
+			}
+		}
+	}
+
+	if (m_IsActive == true)
+	{
+		switch (message)
+		{
+		case WM_KEYDOWN:
+		case WM_KEYUP:
+			switch (wParam)
+			{
+			case VK_BACK:
+				DeleteText();
+				break;
+
+			case VK_HANGEUL:
+				m_IMEMode = !m_IMEMode;
+				ChangeIMEMode(hWnd, m_IMEMode);
+				break;
+
+			case VK_LEFT:
+			case VK_RIGHT:
+				ControlCaret(wParam);
+				break;
+			}
 			break;
 		}
-		break;
-	}
 
- 	switch (message)
-	{
-	case WM_CHAR:				// 1byte 문자 (ex : 영어)
-		break;
-	case WM_IME_COMPOSITION:
-		m_hIMC = ImmGetContext(hWnd);	// ime핸들을 얻는것
-		if (lParam & GCS_RESULTSTR)
+		switch (message)
 		{
-			if ((len = ImmGetCompositionString(m_hIMC, GCS_RESULTSTR, NULL, 0)) > 0)
-			{
-				// 완성된 글자가 있다.
-				ImmGetCompositionString(m_hIMC, GCS_RESULTSTR, m_CombinationText, len);
-				m_CombinationText[len] = 0;
-				strcpy(m_Text + strlen(m_Text), m_CombinationText);
-				memset(m_CombinationText, 0, 10);
-				{
-					//ConvertString();
-					char szTemp[256] = "";
-					sprintf(szTemp, "완성된 글자 : %s\r\n", m_Text);
-					wcout << szTemp << endl;
-				}
-			}
+		case WM_CHAR:				// 1byte 문자 (ex : 영어)
+			ProcessEnglish(hWnd, wParam);
+			break;
 
+		case WM_IME_COMPOSITION:
+			ProcessKorean(hWnd, lParam);
+			break;
+
+		case WM_IME_NOTIFY:
+			break;
 		}
-		else if (lParam & GCS_COMPSTR)
-		{
-			// 현재 글자를 조합 중이다.
-
-			// 조합중인 길이를 얻는다.
-			// str에  조합중인 문자를 얻는다.
-			len = ImmGetCompositionString(m_hIMC, GCS_COMPSTR, NULL, 0);
-			ImmGetCompositionString(m_hIMC, GCS_COMPSTR, m_CombinationText, len);
-			m_CombinationText[len] = 0;
-			{
-				//ConvertString();
-				char szTemp[256] = "";
-				sprintf(szTemp, "조합중인 글자 : %s\r\n", m_CombinationText);
-				wcout << szTemp << endl;
-
-				//OutputDebugString(szTemp));
-			}
-		}
-
-		ImmReleaseContext(hWnd, m_hIMC);	// IME 핸들 반환!!
-		return 0;
-
-	case WM_IME_NOTIFY:			// 한영키
-		//
-		break;
 	}
-	return 1;
+	
+	return 0;
 }
-
 
 void Input::ProcessMouseMessage(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 }
 
-void Input::ConvertString()
+void Input::ProcessEnglish(HWND hWnd, WPARAM wParam)
 {
-	size_t size = 0;
-	wchar_t wstr[MAX_LEN] = { 0, };
+	unsigned char key = static_cast<unsigned char>(m_TextList.size());
+	wstring text;
+	text = static_cast<wchar_t>(wParam);
 
-	mbstowcs_s(&size, wstr, MAX_LEN, m_Text, MAX_LEN);
+	m_TextList.emplace_back(TextInfo(key, text));
+	
+	m_CaretPos = m_TextList.size();
+}
 
-	m_Chatting = wstr;
+void Input::ProcessKorean(HWND hWnd, LPARAM lParam)
+{
+	HIMC himc = ImmGetContext(hWnd);
+	int len = 0;
+	wchar_t temp[10] = { 0, };
 
-	//wcout << m_Chatting << endl;
+	// 한글 조합중이라면,
+	if (lParam & GCS_COMPSTR)
+	{
+		len = ImmGetCompositionStringW(himc, GCS_COMPSTR, nullptr, 0);
+		if (len > 0)
+		{
+			ImmGetCompositionStringW(himc, GCS_COMPSTR, temp, len);
+			temp[len] = 0;
+			m_Comb = temp;
+		}
+	}
+
+	// 한글이 완성됬다면,
+	else if (lParam & GCS_RESULTSTR)
+	{
+		len = ImmGetCompositionStringW(himc, GCS_RESULTSTR, nullptr, 0);
+		if (len > 0)
+		{
+			ImmGetCompositionStringW(himc, GCS_RESULTSTR, temp, len);
+			temp[len] = 0;
+
+			unsigned char key = static_cast<unsigned char>(m_TextList.size());
+			wstring text = temp;
+			m_TextList.emplace_back(TextInfo(key, text));
+
+			m_CaretPos = m_TextList.size();
+			// 조합중인 글자는 지움
+			m_Comb.clear();
+		}
+	}
+
+	ImmReleaseContext(hWnd, himc);	// IME 핸들 반환!!
+}
+
+void Input::DeleteText()
+{
+	if (m_TextList.size() > 0)
+	{
+		//for (auto iter = m_TextList.begin(); iter != m_TextList.end(); )
+		//{
+		//	if ((*iter).m_Key == m_CaretPos - 1)
+		//	{
+		//		iter = m_TextList.erase(iter);
+		//		--m_CaretPos;
+		//	}
+
+		//	else
+		//		++iter;
+		//}
+		auto iter = m_TextList.end();
+		m_TextList.erase(--iter);
+	}
 }
 
 void Input::ChangeIMEMode(HWND hWnd, bool korean)
 {
-	HIMC hIMC = ImmGetContext(hWnd);
-	DWORD dwConv, dwSent;
-	DWORD dwTemp;
+	HIMC himc = ImmGetContext(hWnd);
+	DWORD sentence;
+	DWORD temp;
 
-	ImmGetConversionStatus(hIMC, &dwConv, &dwSent);
+	ImmGetConversionStatus(himc, &m_IMEMode, &sentence);
 
-	dwTemp = dwConv & ~IME_CMODE_LANGUAGE;
+	temp = m_IMEMode & ~IME_CMODE_LANGUAGE;
 
 	// 상태를 바꿉니다. 
 	if (korean)
-		dwTemp |= IME_CMODE_NATIVE;      // 한글 
+		temp |= IME_CMODE_NATIVE;      // 한글 
 	else
-		dwTemp |= IME_CMODE_ALPHANUMERIC;  // 영문
+		temp |= IME_CMODE_ALPHANUMERIC;  // 영문
 
-	dwConv = dwTemp;
+	m_IMEMode = temp;
 
-	ImmSetConversionStatus(hIMC, dwConv, dwSent);
-	ImmReleaseContext(hWnd, hIMC);
+	ImmSetConversionStatus(himc, m_IMEMode, sentence);
+	ImmReleaseContext(hWnd, himc);
+}
+
+void Input::ControlCaret(WPARAM wParam)
+{
+	if (wParam == VK_LEFT)
+	{
+		if (--m_CaretPos < 0)
+			m_CaretPos = 0;
+	}
+	else
+	{
+		if (++m_CaretPos > m_TextList.size())
+			m_CaretPos = m_TextList.size();
+	}
+}
+
+wstring Input::GetText() const
+{
+	wstring text = L"";
+
+	for (auto iter = m_TextList.begin(); iter != m_TextList.end(); ++iter)
+		text += (*iter).m_Text;
+
+	return text;
 }
