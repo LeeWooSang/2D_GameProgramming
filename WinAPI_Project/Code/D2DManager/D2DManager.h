@@ -49,7 +49,7 @@ class D2DManager
 	SINGLE_TONE(D2DManager)
 
 	bool Initialize(HWND);
-	bool CreateBitmapImage(const string&, ImageInfo);
+	bool CreateTexture(const string&, ImageInfo);
 
 	void Render();
 	void Render(const string&);
@@ -58,7 +58,7 @@ class D2DManager
 
 	 ID2D1HwndRenderTarget* GetRenderTarget() const { return m_pRenderTarget; }
 
-	 ImageInfo& GetImageInfo(string key) { return m_ImageInfoMap[key]; }
+	 ImageInfo& GetTexture(string key) { return m_ImageInfoMap[key]; }
 
 private:
 	void CreateGameFont();

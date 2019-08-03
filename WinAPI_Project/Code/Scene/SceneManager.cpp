@@ -10,12 +10,7 @@ SceneManager::SceneManager()
 
 SceneManager::~SceneManager()
 {
-	for (auto iter = m_SceneList.begin(); iter != m_SceneList.end(); )
-	{
-		SAFE_DELETE((*iter).second);
-		iter = m_SceneList.erase(iter);
-	}
-	m_SceneList.clear();
+	SAFE_DELETE_MAP(m_SceneList);
 
 	cout << "SceneManager - ¼Ò¸êÀÚ" << endl;
 }

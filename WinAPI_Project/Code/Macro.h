@@ -1,6 +1,23 @@
 #pragma once
 #define SAFE_DELETE(p)				if(p != nullptr)	{ delete p; p = nullptr; }
+
 #define SAFE_DELETE_ARRAY(p)	if(p != nullptr)	{ delete[] p; p = nullptr; }
+
+#define SAFE_DELETE_LIST(p) \
+for(auto iter = p.begin(); iter != p.end(); ) \
+{ \
+	delete (*iter); \
+	iter = p.erase(iter); \
+} \
+p.clear(); \
+
+#define SAFE_DELETE_MAP(p) \
+for(auto iter = p.begin(); iter != p.end(); ) \
+{ \
+	delete (*iter).second; \
+	iter = p.erase(iter); \
+} \
+p.clear(); \
 
 //  ΩÃ±€≈Ê ∏≈≈©∑Œ
 #define SINGLE_TONE(T)	\

@@ -39,6 +39,12 @@
     <Filter Include="Code\Network">
       <UniqueIdentifier>{8141bf58-f271-4551-a9fc-c408bb2cefd8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Code\GameObject\UI">
+      <UniqueIdentifier>{b564e09c-8c67-49be-81ed-32c2f9069efa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\GameObject\UI\Chat">
+      <UniqueIdentifier>{f912d494-3d9a-4828-8a59-4e8b738218ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Main.cpp">
@@ -76,6 +82,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Network\Network.cpp">
       <Filter>Code\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GameObject\UI\UI.cpp">
+      <Filter>Code\GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GameObject\UI\Chat\Chat.cpp">
+      <Filter>Code\GameObject\UI\Chat</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +131,15 @@
       <Filter>Code\Input</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Network\Network.h">
+      <Filter>Code\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\GameObject\UI\UI.h">
+      <Filter>Code\GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\GameObject\UI\Chat\Chat.h">
+      <Filter>Code\GameObject\UI\Chat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Server\Code\Protocol.h">
       <Filter>Code\Network</Filter>
     </ClInclude>
   </ItemGroup>

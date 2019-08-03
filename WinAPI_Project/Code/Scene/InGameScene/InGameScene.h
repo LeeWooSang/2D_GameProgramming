@@ -1,6 +1,5 @@
 #pragma once
 #include "../Scene.h"
-#include "../../Defines.h"
 
 class InGameScene : public Scene
 {
@@ -14,6 +13,5 @@ public:
 	virtual void Release() override;
 
 private:
-	list<class GameObject*> m_ObjectList;
-	class Player* m_pPlayer;
+
 };

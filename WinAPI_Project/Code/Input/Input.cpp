@@ -7,12 +7,9 @@
 INIT_INSTACNE(Input)
 
 Input::Input()
+	: m_IMEMode(IMEMODE::ENGLISH), m_IsActive(false), m_Comb(L""), m_CaretPos(0)
 {
-	m_IMEMode = IMEMODE::ENGLISH;
-	m_IsActive = false;
-	m_Comb = L"";
 	m_TextList.clear();
-	m_CaretPos = 0;
 }
 
 Input::~Input()

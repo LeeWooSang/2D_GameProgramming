@@ -2,7 +2,7 @@
 #include"../../D2DManager/D2DManager.h"
 
 Player::Player() 
-	: GameObject(), m_FrameTime(0.f)
+	: GameObject(), m_Frame(0.f)
 {
 }
 
@@ -18,7 +18,7 @@ bool Player::Initialize()
 	//	return false;
 
 	D2D1_RECT_F pos = { 0, 0, 100, 100 };
-	if (GET_INSTANCE(D2DManager)->CreateBitmapImage("Player", ImageInfo(L"../Resource/Textures/PinkBin2.png", pos, 828, 126, 6, 1, 0, 0)) == false)
+	if (GET_INSTANCE(D2DManager)->CreateTexture("Player", ImageInfo(L"../Resource/Textures/Character/PinkBin2.png", pos, 828, 126, 6, 1, 0, 0)) == false)
 		return false;
 
 
@@ -27,12 +27,12 @@ bool Player::Initialize()
 
 void Player::Update(float elapsedTime)
 {
-	if (m_FrameTime < 6)
-		m_FrameTime += elapsedTime * 5;
+	if (m_Frame < 6)
+		m_Frame += elapsedTime * 5;
 	else
-		m_FrameTime = 0.f;
+		m_Frame = 0.f;
 
-	D2D1_RECT_F pos = GET_INSTANCE(D2DManager)->GetImageInfo("Player").m_Pos;
+	D2D1_RECT_F pos = GET_INSTANCE(D2DManager)->GetTexture("Player").m_Pos;
 
 	if (GetAsyncKeyState(VK_RIGHT) & 0x0001)
 	{
@@ -58,15 +58,14 @@ void Player::Update(float elapsedTime)
 		pos.bottom += 10;
 	}
 
-	GET_INSTANCE(D2DManager)->GetImageInfo("Player").m_Pos = pos;
+	GET_INSTANCE(D2DManager)->GetTexture("Player").m_Pos = pos;
 }
 
 void Player::Render()
 {
-	D2D1_RECT_F pos = GET_INSTANCE(D2DManager)->GetImageInfo("Player").m_Pos;
+	D2D1_RECT_F pos = GET_INSTANCE(D2DManager)->GetTexture("Player").m_Pos;
 
-
-	GET_INSTANCE(D2DManager)->Render("Player", pos, (int)m_FrameTime, 0);
+	GET_INSTANCE(D2DManager)->Render("Player", pos, static_cast<int>(m_Frame), 0);
 }
 
 void Player::Release()

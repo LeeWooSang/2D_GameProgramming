@@ -1,7 +1,7 @@
 #include "GameObject.h"
 
 GameObject::GameObject()
-	: m_Pos{0}
+	: m_Pos{ 0 }, m_SizeX(0), m_SizeY(0)
 {
 }
 

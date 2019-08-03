@@ -83,7 +83,7 @@ bool D2DManager::Initialize(HWND hWnd)
 	return true;
 }
 
-bool D2DManager::CreateBitmapImage(const string& key, ImageInfo info)
+bool D2DManager::CreateTexture(const string& key, ImageInfo info)
 {
 	// [ Bitmap 이미지 초기화 방법 ] 
 	// 1. Com객체 초기화

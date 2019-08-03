@@ -1,4 +1,5 @@
 #pragma once
+#include "../Defines.h"
 
 class Scene
 {
@@ -11,5 +12,6 @@ public:
 	virtual void Render() = 0;
 	virtual void Release() = 0;
 
-private:
+protected:
+	list<class GameObject*> m_ObjectList;
 };

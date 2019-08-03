@@ -1,17 +1,16 @@
 #pragma once
 #include "../GameObject.h"
 
-class Player : public GameObject
+class UI : public GameObject
 {
 public:
-	Player();
-	virtual ~Player();
+	UI();
+	virtual ~UI();
 
-	virtual bool Initialize() override;
+	virtual bool Initialize() = 0;
 	virtual void Update(float) override;
 	virtual void Render() override;
 	virtual void Release() override;
 
-private:
-	float m_Frame;
+protected:
 };

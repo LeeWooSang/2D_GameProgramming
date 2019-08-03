@@ -77,7 +77,6 @@ ATOM Core::MyRegisterClass()
 	WNDCLASSEX wcex;
 
 	wcex.cbSize = sizeof(WNDCLASSEX);
-
 	wcex.style = CS_HREDRAW | CS_VREDRAW;
 	wcex.lpfnWndProc = Core::WndProc;
 	wcex.cbClsExtra = 0;

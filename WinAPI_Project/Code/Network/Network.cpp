@@ -3,9 +3,8 @@
 INIT_INSTACNE(Network)
 
 Network::Network()
+	: m_Socket(0), m_InPacketSize(0), m_SavedPacketSize(0)
 {
-	m_Socket = 0;
-
 	ZeroMemory(m_SendBuf, sizeof(char) * BUF_SIZE);
 	ZeroMemory(m_RecvBuf, sizeof(char) * BUF_SIZE);
 
@@ -15,9 +14,6 @@ Network::Network()
 	m_RecvWsaBuf.len = BUF_SIZE;
 
 	ZeroMemory(m_PacketBuf, sizeof(char) * BUF_SIZE);
-
-	m_InPacketSize = 0;
-	m_SavedPacketSize = 0;
 }
 
 Network::~Network()
