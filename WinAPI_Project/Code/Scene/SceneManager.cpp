@@ -40,3 +40,12 @@ void SceneManager::Render()
 		(*iter).second->Render();
 	}
 }
+
+InGameScene* SceneManager::GetInGameScene() const
+{
+	auto iter = m_SceneList.find("InGameScene");
+	if (iter != m_SceneList.end())
+		return reinterpret_cast<InGameScene*>((*iter).second);
+
+	return nullptr;
+}

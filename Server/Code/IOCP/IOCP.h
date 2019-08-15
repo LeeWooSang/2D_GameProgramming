@@ -1,18 +1,6 @@
 #pragma once
 #include "../../../WinAPI_Project/Code/Macro.h"
 #include "../Defines.h"
-#include "../Protocol.h"
-
-constexpr int MAX_WORKER_THREAD = 4;
-enum EVENT_TYPE { EV_RECV, EV_SEND, EV_MOVE, EV_DIE, EV_RESPAWN, EV_ATTACK, EV_HP_HEAL };
-struct OverEx
-{
-	WSAOVERLAPPED	overlapped;
-	WSABUF					dataBuffer;
-	char							messageBuffer[BUF_SIZE];
-	EVENT_TYPE				eventType;
-	int								eventTargetID;
-};
 
 class IOCP
 {
@@ -22,13 +10,32 @@ class IOCP
 	void Run();
 
 private:
-	void ThreadPool();
 	void ErrorDisplay(const char*, int);
+
+	void ThreadPool();
+	void ReleaseWorkerThread();
+
+	void Accept();
+	void ReleaseAcceptTrhead();
+
 	void Recv(int);
 	void Send(int, char*);
+
 	void ProcessPacket(int, char*);
+
 	void Disconnect(int);
 
+private:
+	void 	Send_Login_Ok_Packet(int);
+	void Send_Login_Fail_Packet(int);
+	void 	Send_Add_Object_Packet(int to, int obj);
+	void 	Send_Position_Packet(int, int);
+	void Send_Remove_Object_Packet(int to, int id);
+
+private:
 	HANDLE m_IOCPHandle;
 	vector<thread> m_WorkerThread;
+	vector<class Character*> m_Characters;
+	bool m_IsRelease;
+	SOCKET m_ListenSocket;
 };

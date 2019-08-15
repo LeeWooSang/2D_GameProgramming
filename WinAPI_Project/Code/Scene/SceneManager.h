@@ -10,6 +10,7 @@ class SceneManager
 	void Update(float);
 	void Render();
 
+	class InGameScene* GetInGameScene() const;
 private:
 	unordered_map<string, class Scene*> m_SceneList;
 };

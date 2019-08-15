@@ -66,6 +66,9 @@ bool Core::Initialize(HINSTANCE hInst)
 	if (GET_INSTANCE(Network)->Initialize() == false)
 		return false;
 
+	// 서버 연결
+	GET_INSTANCE(Network)->Connect(m_hWnd);
+
 	::ShowWindow(m_hWnd, SW_SHOW);
 	::UpdateWindow(m_hWnd);
 

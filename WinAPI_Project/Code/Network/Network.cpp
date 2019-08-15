@@ -1,4 +1,7 @@
 #include "Network.h"
+#include "../Scene/SceneManager.h"
+#include "../Scene/InGameScene/InGameScene.h"
+#include "../GameObject/Player/Player.h"
 
 INIT_INSTACNE(Network)
 
@@ -67,6 +70,7 @@ void Network::Connect(HWND hWnd)
 
 	WSAAsyncSelect(m_Socket, hWnd, WM_SOCKET, FD_CLOSE | FD_READ);
 
+	cout << "서버 연결 성공!!" << endl;
 	//m_ConnectState = CONNECT_STATE::OK;
 }
 
@@ -119,11 +123,48 @@ void Network::Send()
 
 void Network::ProcessPacket(char* buf)
 {
-	//switch (buf[1])
-	//{
-	//default:
-	//	break;
-	//}
+	switch (buf[1])
+	{
+	case SC_LOGIN_OK:
+		{
+			SC_Packet_Login_OK* packet = reinterpret_cast<SC_Packet_Login_OK*>(buf);
+			m_MyID = packet->id;
+			break;
+		}
+
+	case SC_LOGIN_FAIL:
+		{
+			SC_Packet_Login_Fail* packet = reinterpret_cast<SC_Packet_Login_Fail*>(buf);
+			break;
+		}
+
+	case SC_ADD_OBJECT:
+		{
+			SC_Packet_Add_Object* packet = reinterpret_cast<SC_Packet_Add_Object*>(buf);
+			break;
+		}
+
+	case SC_POSITION:
+		{
+			SC_Packet_Position* packet = reinterpret_cast<SC_Packet_Position*>(buf);
+			int id = packet->id;
+
+			GameObject* object = GET_INSTANCE(SceneManager)->GetInGameScene()->FindObject(id);
+			if (object != nullptr)
+			{
+				object->SetX(packet->x);
+				object->SetY(packet->y);
+			}
+
+			break;
+		}
+
+	case SC_REMOVE_OBJECT:
+		break;
+
+	default:
+		break;
+	}
 }
 
 void Network::ProcessWindowMessage(WPARAM wParam, LPARAM lParam)

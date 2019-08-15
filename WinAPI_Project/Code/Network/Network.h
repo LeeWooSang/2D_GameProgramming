@@ -14,6 +14,9 @@ class Network
 	void ProcessPacket(char*);
 	void ProcessWindowMessage(WPARAM, LPARAM);
 
+	void SetMyID(int id) { m_MyID = id; }
+	int GetMyID()	const { return m_MyID; }
+
 private:
 	SOCKET m_Socket;
 
@@ -25,4 +28,6 @@ private:
 	char	m_PacketBuf[BUF_SIZE];
 	unsigned long	m_InPacketSize;
 	unsigned long	m_SavedPacketSize;
+
+	int m_MyID;
 };

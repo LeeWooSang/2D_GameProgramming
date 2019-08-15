@@ -41,3 +41,6 @@ public: \
 
 // 객체 얻어오는 매크로
 #define GET_INSTANCE(T)	T::GetInstance()
+
+#define KEY_DOWN(VK_CODE)	((GetAsyncKeyState(VK_CODE) & 0x8000) ? 1 : 0)
+#define KEY_UP(VK_CODE)			((GetAsyncKeyState(VK_CODE) & 0x8000) ? 0 : 1)

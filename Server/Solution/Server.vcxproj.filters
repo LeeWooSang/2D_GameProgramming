@@ -8,8 +8,11 @@
     <Filter Include="Code">
       <UniqueIdentifier>{4d26c743-d247-4fd6-b7bb-5dcf494d92a3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Code\Server">
+    <Filter Include="Code\IOCP">
       <UniqueIdentifier>{a07d9030-b935-4035-9b1c-c6c62fd92bd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\Character">
+      <UniqueIdentifier>{f26d4f56-d203-4544-9acd-83732c3e233c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -17,7 +20,10 @@
       <Filter>Code</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\IOCP\IOCP.cpp">
-      <Filter>Code\Server</Filter>
+      <Filter>Code\IOCP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Character\Character.cpp">
+      <Filter>Code\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -31,7 +37,10 @@
       <Filter>Code</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\IOCP\IOCP.h">
-      <Filter>Code\Server</Filter>
+      <Filter>Code\IOCP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Character\Character.h">
+      <Filter>Code\Character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

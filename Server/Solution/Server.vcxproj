@@ -19,11 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\Character\Character.cpp" />
     <ClCompile Include="..\Code\IOCP\IOCP.cpp" />
     <ClCompile Include="..\Code\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\WinAPI_Project\Code\Macro.h" />
+    <ClInclude Include="..\Code\Character\Character.h" />
     <ClInclude Include="..\Code\Defines.h" />
     <ClInclude Include="..\Code\IOCP\IOCP.h" />
     <ClInclude Include="..\Code\Protocol.h" />
