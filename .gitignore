@@ -21,7 +21,7 @@ Thumbs.db
 *.sbr
 *.vs
 *.log
-\x64
+*\x64
 *\Debug
 *\Release
 *\Excutable
