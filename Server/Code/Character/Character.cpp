@@ -38,14 +38,46 @@ void Character::Move(char dir, float& x, float& y)
 			y = WORLD::HEIGHT - 1;
 		break;
 
+	case DIRECTION::RIGHT:
+		if (x < WORLD::WIDTH - 1)
+			x++;
+		break;
+
 	case DIRECTION::LEFT:
 		if (x > 0)
 			x--;
 		break;
 
-	case DIRECTION::RIGHT:
+	case DIRECTION::UP_RIGHT:
+		--y;
+		if (y < 0)
+			y = 0;
 		if (x < WORLD::WIDTH - 1)
 			x++;
+		break;
+
+	case DIRECTION::UP_LEFT:
+		--y;
+		if (y < 0)
+			y = 0;
+		if (x > 0)
+			x--;
+		break;
+
+	case DIRECTION::DOWN_RIGHT:
+		++y;
+		if (y >= WORLD::HEIGHT)
+			y = WORLD::HEIGHT - 1;
+		if (x < WORLD::WIDTH - 1)
+			x++;
+		break;
+
+	case DIRECTION::DOWN_LEFT:
+		++y;
+		if (y >= WORLD::HEIGHT)
+			y = WORLD::HEIGHT - 1;
+		if (x > 0)
+			x--;
 		break;
 
 	default:

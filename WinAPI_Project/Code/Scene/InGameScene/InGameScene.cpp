@@ -1,5 +1,6 @@
 #include "InGameScene.h"
 #include "../../Macro.h"
+#include "../../GameObject/Map/Map.h"
 #include "../../GameObject/Player/Player.h"
 #include "../../GameObject/UI/Chat/Chat.h"
 
@@ -16,6 +17,11 @@ InGameScene::~InGameScene()
 
 bool InGameScene::Initialize()
 {
+	Map* pMap = new Map;
+	if (pMap->Initialize() == false)
+		return false;
+	m_ObjectList.emplace_back(pMap);
+
 	Player* pPlayer = new Player;
 	if (pPlayer->Initialize() == false)
 		return false;

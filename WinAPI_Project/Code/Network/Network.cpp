@@ -141,6 +141,15 @@ void Network::ProcessPacket(char* buf)
 	case SC_ADD_OBJECT:
 		{
 			SC_Packet_Add_Object* packet = reinterpret_cast<SC_Packet_Add_Object*>(buf);
+			int id = packet->id;
+
+			GameObject* object = GET_INSTANCE(SceneManager)->GetInGameScene()->FindObject(id);
+			if (object != nullptr)
+			{
+				object->SetX(packet->x);
+				object->SetY(packet->y);
+			}
+
 			break;
 		}
 
@@ -185,5 +194,17 @@ void Network::ProcessWindowMessage(WPARAM wParam, LPARAM lParam)
 		::PostQuitMessage(0);
 		break;
 	}
+}
+
+void Network::Send_Move_Packet(char dir)
+{
+	CS_Packet_Move* packet = reinterpret_cast<CS_Packet_Move*>(m_SendBuf);
+	packet->size = sizeof(CS_Packet_Move);
+	packet->type = CS_MOVE;
+	packet->direction = dir;
+
+	m_SendWsaBuf.len = sizeof(CS_Packet_Move);
+
+	Send();
 }
 

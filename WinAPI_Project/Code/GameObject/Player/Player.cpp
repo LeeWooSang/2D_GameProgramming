@@ -1,5 +1,6 @@
 #include "Player.h"
 #include"../../D2DManager/D2DManager.h"
+#include "../../Network/Network.h"
 
 Player::Player() 
 	: GameObject(), m_Frame(0.f)
@@ -33,30 +34,44 @@ void Player::Update(float elapsedTime)
 		m_Frame = 0.f;
 
 	D2D1_RECT_F pos = GET_INSTANCE(D2DManager)->GetTexture("Player").m_Pos;
+	float moveSize = 2.f;
 
-	if (GetAsyncKeyState(VK_RIGHT) & 0x0001)
+	char dir = DIRECTION::IDLE;
+
+	if (GetAsyncKeyState(VK_UP) & 0x8000)
 	{
-		pos.left += 10;
-		pos.right += 10;
+		dir |= DIRECTION::UP;
+
+		pos.top -= moveSize;
+		pos.bottom -= moveSize;
 	}
 
-	if (GetAsyncKeyState(VK_LEFT) & 0x0001)
+	else if (GetAsyncKeyState(VK_DOWN) & 0x8000)
 	{
-		pos.left -= 10;
-		pos.right -= 10;
+		dir |= DIRECTION::DOWN;
+
+		pos.top += moveSize;
+		pos.bottom += moveSize;
 	}
 
-	if (GetAsyncKeyState(VK_UP) & 0x0001)
+	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
 	{
-		pos.top -= 10;
-		pos.bottom -= 10;
+		dir |= DIRECTION::RIGHT;
+
+		pos.left += moveSize;
+		pos.right += moveSize;
 	}
 
-	if (GetAsyncKeyState(VK_DOWN) & 0x0001)
+	else if (GetAsyncKeyState(VK_LEFT) & 0x8000)
 	{
-		pos.top += 10;
-		pos.bottom += 10;
+		dir |= DIRECTION::LEFT;
+
+		pos.left -= moveSize;
+		pos.right -= moveSize;
 	}
+
+	if(dir != DIRECTION::IDLE)
+		GET_INSTANCE(Network)->Send_Move_Packet(dir);
 
 	GET_INSTANCE(D2DManager)->GetTexture("Player").m_Pos = pos;
 }

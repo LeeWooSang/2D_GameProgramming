@@ -3,7 +3,20 @@
 #define SERVER_IP "127.0.0.1"
 
 enum NETWORK { PORT = 9000, BUF_SIZE = 1024 };
-enum DIRECTION { UP, DOWN, LEFT, RIGHT };
+
+enum DIRECTION 
+{ 
+	IDLE = 0x0000, 
+	UP = 0x0001, 
+	DOWN = 0x0002, 
+	RIGHT = 0x0004, 
+	LEFT = 0x0008, 
+
+	UP_RIGHT = 0x0005,
+	UP_LEFT = 0x0009,
+	DOWN_RIGHT = 0x0006,
+	DOWN_LEFT = 0x000A
+};
 
 enum WORLD { WIDTH = 300, HEIGHT = 300 };
 

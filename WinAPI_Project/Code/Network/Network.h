@@ -14,6 +14,8 @@ class Network
 	void ProcessPacket(char*);
 	void ProcessWindowMessage(WPARAM, LPARAM);
 
+	void Send_Move_Packet(char);
+
 	void SetMyID(int id) { m_MyID = id; }
 	int GetMyID()	const { return m_MyID; }
 

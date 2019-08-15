@@ -45,6 +45,9 @@
     <Filter Include="Code\GameObject\UI\Chat">
       <UniqueIdentifier>{f912d494-3d9a-4828-8a59-4e8b738218ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Code\GameObject\Map">
+      <UniqueIdentifier>{3c73e6cd-61d2-4d06-913d-ee76cd593336}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Main.cpp">
@@ -88,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\GameObject\UI\Chat\Chat.cpp">
       <Filter>Code\GameObject\UI\Chat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GameObject\Map\Map.cpp">
+      <Filter>Code\GameObject\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +147,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Server\Code\Protocol.h">
       <Filter>Code\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\GameObject\Map\Map.h">
+      <Filter>Code\GameObject\Map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
