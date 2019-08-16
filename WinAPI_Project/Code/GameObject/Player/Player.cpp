@@ -1,6 +1,7 @@
 #include "Player.h"
 #include"../../D2DManager/D2DManager.h"
 #include "../../Network/Network.h"
+#include "../../Camera/Camera.h"
 
 Player::Player() 
 	: GameObject(), m_Frame(0.f)
@@ -14,14 +15,12 @@ Player::~Player()
 
 bool Player::Initialize()
 {
-	//D2D1_RECT_F pos = { 0, 0, 100, 100 };
-	//if (GET_INSTANCE(D2DManager)->CreateBitmapImage("Player", ImageInfo(L"../Resource/Textures/Player.png", pos, 133, 144, 1, 1, 0, 0)) == false)
-	//	return false;
-
-	D2D1_RECT_F pos = { 0, 0, 100, 100 };
-	if (GET_INSTANCE(D2DManager)->CreateTexture("Player", ImageInfo(L"../Resource/Textures/Character/PinkBin2.png", pos, 828, 126, 6, 1, 0, 0)) == false)
+	if (GET_INSTANCE(D2DManager)->CreateTexture("Player", ImageInfo(L"../Resource/Textures/Character/PinkBin2.png", 828, 126, 6, 1, 0, 0, 100, 100)) == false)
 		return false;
 
+	m_Speed = 0.5f;
+
+	GET_INSTANCE(Camera)->SetTarget(this);
 
 	return true;
 }
@@ -33,54 +32,62 @@ void Player::Update(float elapsedTime)
 	else
 		m_Frame = 0.f;
 
-	D2D1_RECT_F pos = GET_INSTANCE(D2DManager)->GetTexture("Player").m_Pos;
-	float moveSize = 2.f;
+	float moveSize = m_Speed * elapsedTime;
 
 	char dir = DIRECTION::IDLE;
+	float gap = 0.9f;
+	
+	XMFLOAT2 cameraPos = GET_INSTANCE(Camera)->GetWorldPosition();
 
 	if (GetAsyncKeyState(VK_UP) & 0x8000)
 	{
 		dir |= DIRECTION::UP;
+		m_WorldPosition.y += moveSize;
+		if (m_WorldPosition.y >= gap)
+			m_WorldPosition.y = gap;
 
-		pos.top -= moveSize;
-		pos.bottom -= moveSize;
+		GET_INSTANCE(Camera)->SetWorldPosition(XMFLOAT2(cameraPos.x, cameraPos.y - moveSize));
 	}
 
 	else if (GetAsyncKeyState(VK_DOWN) & 0x8000)
 	{
 		dir |= DIRECTION::DOWN;
+		m_WorldPosition.y -= moveSize;
+		if (m_WorldPosition.y <= -gap)
+			m_WorldPosition.y = -gap;
 
-		pos.top += moveSize;
-		pos.bottom += moveSize;
+		GET_INSTANCE(Camera)->SetWorldPosition(XMFLOAT2(cameraPos.x, cameraPos.y + moveSize));
 	}
 
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
 	{
 		dir |= DIRECTION::RIGHT;
+		m_WorldPosition.x += moveSize;
+		if (m_WorldPosition.x >= gap)
+			m_WorldPosition.x = gap;
 
-		pos.left += moveSize;
-		pos.right += moveSize;
+		GET_INSTANCE(Camera)->SetWorldPosition(XMFLOAT2(cameraPos.x - moveSize, cameraPos.y));
 	}
 
 	else if (GetAsyncKeyState(VK_LEFT) & 0x8000)
 	{
 		dir |= DIRECTION::LEFT;
+		m_WorldPosition.x -= moveSize;
+		if (m_WorldPosition.x <= -gap)
+			m_WorldPosition.x = -gap;
 
-		pos.left -= moveSize;
-		pos.right -= moveSize;
+		GET_INSTANCE(Camera)->SetWorldPosition(XMFLOAT2(cameraPos.x + moveSize, cameraPos.y));
 	}
+	
+	//GET_INSTANCE(Camera)->Update(elapsedTime);
 
-	if(dir != DIRECTION::IDLE)
-		GET_INSTANCE(Network)->Send_Move_Packet(dir);
-
-	GET_INSTANCE(D2DManager)->GetTexture("Player").m_Pos = pos;
+	//if(dir != DIRECTION::IDLE)
+	//	GET_INSTANCE(Network)->Send_Move_Packet(dir);
 }
 
 void Player::Render()
 {
-	D2D1_RECT_F pos = GET_INSTANCE(D2DManager)->GetTexture("Player").m_Pos;
-
-	GET_INSTANCE(D2DManager)->Render("Player", pos, static_cast<int>(m_Frame), 0);
+	GET_INSTANCE(D2DManager)->Render("Player", m_WorldPosition, static_cast<int>(m_Frame), 0);
 }
 
 void Player::Release()

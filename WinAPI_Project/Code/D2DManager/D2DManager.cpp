@@ -1,4 +1,5 @@
 #include "D2DManager.h"
+#include "../Camera/Camera.h"
 
 INIT_INSTACNE(D2DManager)
 
@@ -243,17 +244,47 @@ void D2DManager::CreateGameFontColor()
 	m_FontColorMap.emplace("ÁÖÈ²»ö", pColor[index++]);
 }
 
-void D2DManager::Render()
+void D2DManager::WorldToScreen(D2D1_RECT_F& screenPos, int sizeX, int sizeY, const XMFLOAT2& worldPos)
 {
-	for (auto iter = m_ImageInfoMap.begin(); iter != m_ImageInfoMap.end(); )
-		m_pRenderTarget->DrawBitmap((*iter).second.m_Bitmap, (*iter).second.m_Pos);
+	D3D12_VIEWPORT viewport = GET_INSTANCE(Camera)->GetViewPort();
+
+	float x = ((worldPos.x + 1) * viewport.Width) / 2.0f;
+	float y = ((1 - worldPos.y) * viewport.Height) / 2.0f;
+	float gapX = sizeX * 0.5f;
+	float gapY = sizeY * 0.5f;
+
+	screenPos.left = x - gapX;
+	screenPos.top = y - gapY;
+	screenPos.right = x + gapX;
+	screenPos.bottom = y + gapY;
 }
 
-void D2DManager::Render(const string& key)
+//void D2DManager::ScreenToWorld()
+//{
+//	D3D12_VIEWPORT viewport = GET_INSTANCE(Camera)->GetViewPort();
+//
+//	m_WorldPosition.x = (((2.0f * m_ScreenPosition.x) / viewport.Width) - 1) / 1;
+//	m_WorldPosition.y = -(((2.0f * m_ScreenPosition.y) / viewport.Height) - 1) / 1;
+//}
+
+void D2DManager::Render(const XMFLOAT2& pos)
+{
+	for (auto iter = m_ImageInfoMap.begin(); iter != m_ImageInfoMap.end(); )
+	{
+		D2D1_RECT_F screenPos = { 0 };
+		WorldToScreen(screenPos, (*iter).second.m_SizeX, (*iter).second.m_SizeY, pos);
+		m_pRenderTarget->DrawBitmap((*iter).second.m_Bitmap, screenPos);
+	}
+}
+
+void D2DManager::Render(const string& key, const XMFLOAT2& pos)
 {
 	auto iter = m_ImageInfoMap.find(key);
 	if (iter != m_ImageInfoMap.end())
 	{
+		D2D1_RECT_F screenPos = { 0 };
+		WorldToScreen(screenPos, (*iter).second.m_SizeX, (*iter).second.m_SizeY, pos);
+
 		int width = (*iter).second.m_WidthPixel;
 		int height = (*iter).second.m_HeightPixel;
 
@@ -275,15 +306,18 @@ void D2DManager::Render(const string& key)
 		framePos.right = static_cast<float>(framePos.left + nX);
 		framePos.bottom = static_cast<float>(framePos.top + nY);
 
-		m_pRenderTarget->DrawBitmap((*iter).second.m_Bitmap, (*iter).second.m_Pos, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, framePos);
+		m_pRenderTarget->DrawBitmap((*iter).second.m_Bitmap, screenPos, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, framePos);
 	}
 }
 
-void D2DManager::Render(const string& key, D2D1_RECT_F& pos, int fx, int fy)
+void D2DManager::Render(const string& key, const XMFLOAT2& pos, int fx, int fy)
 {
 	auto iter = m_ImageInfoMap.find(key);
 	if (iter != m_ImageInfoMap.end())
 	{
+		D2D1_RECT_F screenPos = { 0 };
+		WorldToScreen(screenPos, (*iter).second.m_SizeX, (*iter).second.m_SizeY, pos);
+
 		int width = (*iter).second.m_WidthPixel;
 		int height = (*iter).second.m_HeightPixel;
 
@@ -302,7 +336,7 @@ void D2DManager::Render(const string& key, D2D1_RECT_F& pos, int fx, int fy)
 		framePos.right = static_cast<float>(framePos.left + nX);
 		framePos.bottom = static_cast<float>(framePos.top + nY);
 
-		m_pRenderTarget->DrawBitmap((*iter).second.m_Bitmap, pos, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, framePos);
+		m_pRenderTarget->DrawBitmap((*iter).second.m_Bitmap, screenPos, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, framePos);
 	}
 }
 

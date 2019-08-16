@@ -13,5 +13,5 @@ public:
 	virtual void Release() override;
 
 private:
-
+	class Player* m_Player;
 };

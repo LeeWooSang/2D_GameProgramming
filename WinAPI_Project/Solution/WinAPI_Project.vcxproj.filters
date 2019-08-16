@@ -48,6 +48,9 @@
     <Filter Include="Code\GameObject\Map">
       <UniqueIdentifier>{3c73e6cd-61d2-4d06-913d-ee76cd593336}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Code\Camera">
+      <UniqueIdentifier>{91f0222d-0de5-4a50-8045-8764455ee8fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Main.cpp">
@@ -94,6 +97,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\GameObject\Map\Map.cpp">
       <Filter>Code\GameObject\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Camera\Camera.cpp">
+      <Filter>Code\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -150,6 +156,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\GameObject\Map\Map.h">
       <Filter>Code\GameObject\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Camera\Camera.h">
+      <Filter>Code\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

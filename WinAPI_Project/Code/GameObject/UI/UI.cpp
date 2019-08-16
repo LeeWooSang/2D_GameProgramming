@@ -17,7 +17,6 @@ void UI::Update(float)
 
 void UI::Render()
 {
-	GET_INSTANCE(D2DManager)->Render("ChatView");
 }
 
 void UI::Release()

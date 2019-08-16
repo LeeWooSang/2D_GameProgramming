@@ -1,8 +1,10 @@
 #include "GameObject.h"
 
 GameObject::GameObject()
-	: m_Pos{ 0 }, m_SizeX(0), m_SizeY(0)
+	: m_Speed(0.f), m_ID(0)
 {
+	m_WorldPosition.x = 0.f;
+	m_WorldPosition.y = 0.f;
 }
 
 GameObject::~GameObject()

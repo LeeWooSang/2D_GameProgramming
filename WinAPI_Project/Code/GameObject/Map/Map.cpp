@@ -1,5 +1,6 @@
 #include "Map.h"
 #include "../../D2DManager/D2DManager.h"
+#include "../../Camera/Camera.h"
 
 Map::Map()
 	: GameObject()
@@ -13,8 +14,7 @@ Map::~Map()
 
 bool Map::Initialize()
 {
-	D2D1_RECT_F pos = { 0, 0, 800, 600 };
-	if (GET_INSTANCE(D2DManager)->CreateTexture("Map", ImageInfo(L"../Resource/Textures/Map/Login.png", pos, 795, 560, 1, 1, 0, 0)) == false)
+	if (GET_INSTANCE(D2DManager)->CreateTexture("Map", ImageInfo(L"../Resource/Textures/Map/Login.png", 795, 560, 1, 1, 0, 0, 1200, 800)) == false)
 		return false;
 
 
@@ -27,9 +27,8 @@ void Map::Update(float elapsedTime)
 
 void Map::Render()
 {
-	D2D1_RECT_F pos = GET_INSTANCE(D2DManager)->GetTexture("Map").m_Pos;
-
-	GET_INSTANCE(D2DManager)->Render("Map");
+	//GET_INSTANCE(D2DManager)->Render("Player", GET_INSTANCE(Camera)->GetWorldPosition(), static_cast<int>(m_Frame), 0);
+	GET_INSTANCE(D2DManager)->Render("Map", GET_INSTANCE(Camera)->GetWorldPosition());
 }
 
 void Map::Release()

@@ -3,8 +3,10 @@
 #include "../../GameObject/Map/Map.h"
 #include "../../GameObject/Player/Player.h"
 #include "../../GameObject/UI/Chat/Chat.h"
+#include "../../Camera/Camera.h"
 
 InGameScene::InGameScene()
+	: m_Player(nullptr)
 {
 }
 
@@ -22,15 +24,14 @@ bool InGameScene::Initialize()
 		return false;
 	m_ObjectList.emplace_back(pMap);
 
-	Player* pPlayer = new Player;
-	if (pPlayer->Initialize() == false)
-		return false;
-	m_ObjectList.emplace_back(pPlayer);
-
 	Chat* pChatUI = new Chat;
 	if (pChatUI->Initialize() == false)
 		return false;
 	m_ObjectList.emplace_back(pChatUI);
+
+	m_Player = new Player;
+	if (m_Player->Initialize() == false)
+		return false;
 
 	return true;
 }
@@ -39,15 +40,22 @@ void InGameScene::Update(float elapsedTime)
 {
 	for (auto iter = m_ObjectList.begin(); iter != m_ObjectList.end(); ++iter)
 		(*iter)->Update(elapsedTime);
+
+	m_Player->Update(elapsedTime);
+	cout << m_Player->GetWorldPosition().x << ", " << m_Player->GetWorldPosition().y << endl;
 }
 
 void InGameScene::Render()
 {
 	for (auto iter = m_ObjectList.begin(); iter != m_ObjectList.end(); ++iter)
 		(*iter)->Render();
+
+	m_Player->Render();
 }
 
 void InGameScene::Release()
 {
 	SAFE_DELETE_LIST(m_ObjectList);
+
+	SAFE_DELETE(m_Player);
 }

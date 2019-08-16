@@ -1,7 +1,8 @@
 #include "Framework.h"
 #include "../D2DManager/D2DManager.h"
-#include "../Scene/SceneManager.h"
 #include "../GameTimer/GameTimer.h"
+#include "../Camera/Camera.h"
+#include "../Scene/SceneManager.h"
 
 INIT_INSTACNE(Framework)
 
@@ -13,21 +14,27 @@ Framework::Framework()
 Framework::~Framework()
 {
 	GET_INSTANCE(SceneManager)->Release();
-	GET_INSTANCE(D2DManager)->Release();
+
+	GET_INSTANCE(Camera)->Release();
+
 	if (m_pTimer != nullptr)
 	{
 		m_pTimer->Stop();
 		SAFE_DELETE(m_pTimer)
 	}
-	
+
+	GET_INSTANCE(D2DManager)->Release();
 	cout << "Framework - ¼Ò¸êÀÚ" << endl;
 }
 
 bool Framework::Initialize(HWND hWnd)
 {
+	if (GET_INSTANCE(D2DManager)->Initialize(hWnd) == false)
+		return false;
+
 	m_pTimer = new GameTimer;
 
-	if (GET_INSTANCE(D2DManager)->Initialize(hWnd) == false)
+	if (GET_INSTANCE(Camera)->Initialize() == false)
 		return false;
 
 	if (GET_INSTANCE(SceneManager)->Initialize() == false)

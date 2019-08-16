@@ -8,25 +8,27 @@ constexpr int MAX_COLOR_COUNT = 8;
 struct ImageInfo
 {
 	ImageInfo()
-		: m_FilePath(L""), m_Bitmap(nullptr), m_Pos{ 0 }, m_WidthPixel(0), m_HeightPixel(0), m_TotalFrameX(0), m_TotalFrameY(0), m_FrameXNum(0), m_FrameYNum(0) {}
-	ImageInfo(wstring path, D2D1_RECT_F& pos, int width, int height, int totalX, int totalY, int frameX, int frameY)
-		: m_FilePath(path), m_Bitmap(nullptr), m_Pos(pos), m_WidthPixel(width), m_HeightPixel(height), m_TotalFrameX(totalX), m_TotalFrameY(totalY), m_FrameXNum(frameX), m_FrameYNum(frameY) {}
+		: m_FilePath(L""), m_Bitmap(nullptr), m_WidthPixel(0), m_HeightPixel(0), m_TotalFrameX(0), m_TotalFrameY(0), m_FrameXNum(0), m_FrameYNum(0), m_SizeX(0), m_SizeY(0) {}
+	ImageInfo(wstring path, int width, int height, int totalX, int totalY, int frameX, int frameY, int sizeX, int sizeY)
+		: m_FilePath(path), m_Bitmap(nullptr), m_WidthPixel(width), m_HeightPixel(height), m_TotalFrameX(totalX), m_TotalFrameY(totalY), m_FrameXNum(frameX), m_FrameYNum(frameY), m_SizeX(sizeX), m_SizeY(sizeY) {}
 
 	wstring m_FilePath;
 	ID2D1Bitmap* m_Bitmap;
-	D2D1_RECT_F m_Pos;
 
-	int m_WidthPixel = 0;
-	int m_HeightPixel = 0;
+	int m_WidthPixel;
+	int m_HeightPixel;
 
 	// 총 가로 몇프레임
-	int m_TotalFrameX = 0;
+	int m_TotalFrameX;
 	// 총 세로 몇프레임
-	int m_TotalFrameY = 0;
+	int m_TotalFrameY;
 
 	// 현재 프레임
-	int m_FrameXNum = 0;
-	int m_FrameYNum = 0;
+	int m_FrameXNum;
+	int m_FrameYNum;
+
+	int m_SizeX;
+	int m_SizeY;
 };
 
 struct FontInfo
@@ -51,9 +53,12 @@ class D2DManager
 	bool Initialize(HWND);
 	bool CreateTexture(const string&, ImageInfo);
 
-	void Render();
-	void Render(const string&);
-	void Render(const string&, D2D1_RECT_F&, int, int );
+	void WorldToScreen(D2D1_RECT_F&, int, int, const XMFLOAT2&);
+	//void ScreenToWorld();
+
+	void Render(const XMFLOAT2&);
+	void Render(const string&, const XMFLOAT2&);
+	void Render(const string&, const XMFLOAT2&, int, int );
 	void Render(const wstring&, const string&, const string&, D2D1_RECT_F&);
 
 	 ID2D1HwndRenderTarget* GetRenderTarget() const { return m_pRenderTarget; }

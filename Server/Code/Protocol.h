@@ -18,7 +18,7 @@ enum DIRECTION
 	DOWN_LEFT = 0x000A
 };
 
-enum WORLD { WIDTH = 300, HEIGHT = 300 };
+enum WORLD { WIDTH = 1, HEIGHT = 1 };
 
 enum CS_PACKET
 {

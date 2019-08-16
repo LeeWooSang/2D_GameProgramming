@@ -24,8 +24,7 @@ using namespace std;
 #include <math.h>
 #include "Default/Resource.h"
 
-//다이렉트 2D 헤더
-
+// Direct2D
 #ifdef _DEBUG
 #include <dxgidebug.h>
 #endif
@@ -38,5 +37,29 @@ using namespace std;
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib, "dwrite.lib")
 
+// DirectX 12
+#include <d3d12.h>
+#include <DirectXMath.h>
+#pragma comment(lib, "d3d12.lib")
+using namespace DirectX;
+
+
 constexpr int FRAME_BUFFER_WIDTH = 800;
 constexpr int FRAME_BUFFER_HEIGHT = 600;
+
+namespace Matrix4x4
+{
+	inline XMFLOAT4X4 Identity()
+	{
+		XMFLOAT4X4 xmf4x4Result;
+		XMStoreFloat4x4(&xmf4x4Result, XMMatrixIdentity());
+		return(xmf4x4Result);
+	}
+
+	inline XMFLOAT4X4 PerspectiveFovLH(float FovAngleY, float AspectRatio, float NearZ, float FarZ)
+	{
+		XMFLOAT4X4 xmf4x4Result;
+		XMStoreFloat4x4(&xmf4x4Result, XMMatrixPerspectiveFovLH(FovAngleY, AspectRatio, NearZ, FarZ));
+		return(xmf4x4Result);
+	}
+}

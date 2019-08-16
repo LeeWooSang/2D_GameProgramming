@@ -1,7 +1,6 @@
 #include "Input.h"
 #include <imm.h>
 #pragma comment(lib,"imm32.lib")
-
 #include "../D2DManager/D2DManager.h"
 
 INIT_INSTACNE(Input)
@@ -118,6 +117,24 @@ LRESULT Input::ProcessKeyboardMessage(HWND hWnd, UINT message, WPARAM wParam, LP
 
 void Input::ProcessMouseMessage(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	POINT mouse{ 0 };
+	int x = LOWORD(lParam);
+	int y = HIWORD(lParam);
+	ScreenToClient(hWnd, &mouse);
+	switch (message)
+	{
+	case WM_LBUTTONDOWN:
+	case WM_LBUTTONUP:
+	case WM_RBUTTONDOWN:
+	case WM_RBUTTONUP:
+	case WM_MOUSEMOVE:
+		//cout << "X : " << x << ", Y : " << y << endl;
+		//cout << "mX : " << mouse.x << ", mY : " << mouse.y << endl;
+		break;
+
+	default:
+		break;
+	}
 }
 
 void Input::ProcessEnglish(HWND hWnd, WPARAM wParam)

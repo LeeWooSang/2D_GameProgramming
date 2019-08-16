@@ -146,8 +146,6 @@ void Network::ProcessPacket(char* buf)
 			GameObject* object = GET_INSTANCE(SceneManager)->GetInGameScene()->FindObject(id);
 			if (object != nullptr)
 			{
-				object->SetX(packet->x);
-				object->SetY(packet->y);
 			}
 
 			break;
@@ -161,8 +159,6 @@ void Network::ProcessPacket(char* buf)
 			GameObject* object = GET_INSTANCE(SceneManager)->GetInGameScene()->FindObject(id);
 			if (object != nullptr)
 			{
-				object->SetX(packet->x);
-				object->SetY(packet->y);
 			}
 
 			break;
