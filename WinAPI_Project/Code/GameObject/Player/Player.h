@@ -20,7 +20,7 @@ private:
 		IDLE = 0x0000,
 		BREAK = 0x0001,
 		DIE = 0x0002,
-		RAISINGBLOW = 0x0004
+		RAGINGBLOW = 0x0004
 	};
 
 	enum ANIMATION_FRAME
@@ -28,7 +28,7 @@ private:
 		IDLE_FRAME = 6,
 		BREAK_FRAME = 29,
 		DIE_FRAME = 58,
-		RAISINGBLOW_FRAME = 13
+		RAGINGBLOW_FRAME = 13
 	};
 
 	char m_PrevAnimation;

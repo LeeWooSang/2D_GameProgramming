@@ -33,18 +33,18 @@ bool Player::Initialize()
 
 	m_AnimationMap.emplace(ANIMATION::DIE, ANIMATION_FRAME::DIE_FRAME);
 
-	if (GET_INSTANCE(D2DManager)->CreateTexture("RaisingBlow", ImageInfo(L"../Resource/Textures/Skill/Effect/RaisingBlow.png", 5850, 380, ANIMATION_FRAME::RAISINGBLOW_FRAME, 1, 0, 0, 380, 380)) == false)
+	if (GET_INSTANCE(D2DManager)->CreateTexture("RagingBlow", ImageInfo(L"../Resource/Textures/Skill/Effect/RagingBlow.png", 5850, 380, ANIMATION_FRAME::RAGINGBLOW_FRAME, 1, 0, 0, 380, 380)) == false)
 		return false;
 
-	m_AnimationMap.emplace(ANIMATION::RAISINGBLOW, ANIMATION_FRAME::RAISINGBLOW_FRAME);
+	m_AnimationMap.emplace(ANIMATION::RAGINGBLOW, ANIMATION_FRAME::RAGINGBLOW_FRAME);
 
 	//m_Frame = ANIMATION_FRAME::IDLE_FRAME;
 	//m_PrevAnimation = ANIMATION::IDLE;
 	//m_AnimationName = "Idle";
 
-	m_PrevAnimation = ANIMATION::RAISINGBLOW;
-	m_Frame = ANIMATION_FRAME::RAISINGBLOW_FRAME;
-	m_AnimationName = "RaisingBlow";
+	m_PrevAnimation = ANIMATION::RAGINGBLOW;
+	m_Frame = ANIMATION_FRAME::RAGINGBLOW_FRAME;
+	m_AnimationName = "RagingBlow";
 	m_Speed = 0.5f;
 
 	GET_INSTANCE(Camera)->SetTarget(this);
@@ -58,7 +58,7 @@ void Player::Update(float elapsedTime)
 
 	char dir = DIRECTION::IDLE;
 	//char animation = ANIMATION::IDLE;
-	char animation = ANIMATION::RAISINGBLOW;
+	char animation = ANIMATION::RAGINGBLOW;
 
 	float gap = 0.9f;
 	
@@ -146,7 +146,7 @@ void Player::ProcessAnimation(char animation, float elapsedTime)
 		{
 		case ANIMATION::IDLE:					m_AnimationName = "Idle";		break;
 		case ANIMATION::BREAK:					m_AnimationName = "Break";	break;
-		case ANIMATION::RAISINGBLOW:	m_AnimationName = "RaisingBlow";	break;
+		case ANIMATION::RAGINGBLOW:	m_AnimationName = "RagingBlow";	break;
 		default:	
 			break;
 		}
