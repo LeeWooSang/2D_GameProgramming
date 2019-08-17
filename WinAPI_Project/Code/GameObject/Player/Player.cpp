@@ -6,6 +6,7 @@
 Player::Player() 
 	: GameObject(), m_PrevAnimation(0), m_AnimationName(""), m_Frame(0.f)
 {
+	m_ActionFrame = 0.f;
 	m_AnimationMap.clear();
 }
 
@@ -33,6 +34,11 @@ bool Player::Initialize()
 
 	m_AnimationMap.emplace(ANIMATION::DIE, ANIMATION_FRAME::DIE_FRAME);
 
+	if (GET_INSTANCE(D2DManager)->CreateTexture("Action", ImageInfo(L"../Resource/Textures/Character/Action.png", 900, 100, ANIMATION_FRAME::ACTION_FRAME, 1, 0, 0, 150, 150)) == false)
+		return false;
+
+	m_AnimationMap.emplace(ANIMATION::ACTION, ANIMATION_FRAME::ACTION_FRAME);
+
 	if (GET_INSTANCE(D2DManager)->CreateTexture("RagingBlow", ImageInfo(L"../Resource/Textures/Skill/Effect/RagingBlow.png", 5850, 380, ANIMATION_FRAME::RAGINGBLOW_FRAME, 1, 0, 0, 380, 380)) == false)
 		return false;
 
@@ -43,7 +49,8 @@ bool Player::Initialize()
 	//m_AnimationName = "Idle";
 
 	m_PrevAnimation = ANIMATION::RAGINGBLOW;
-	m_Frame = ANIMATION_FRAME::RAGINGBLOW_FRAME;
+	m_Frame = 0.f;
+	m_ActionFrame = 0.f;
 	m_AnimationName = "RagingBlow";
 	m_Speed = 0.5f;
 
@@ -125,6 +132,7 @@ void Player::Update(float elapsedTime)
 
 void Player::Render()
 {
+	GET_INSTANCE(D2DManager)->Render("Action", m_WorldPosition, static_cast<int>(m_ActionFrame), 0);
 	GET_INSTANCE(D2DManager)->Render(m_AnimationName, m_WorldPosition, static_cast<int>(m_Frame), 0);
 }
 
@@ -155,7 +163,36 @@ void Player::ProcessAnimation(char animation, float elapsedTime)
 	}
 
 	m_Frame += elapsedTime * 20;
-
 	if (m_Frame > (*iter).second)
 		m_Frame = 0.f;
+
+	if (m_PrevAnimation & ANIMATION::RAGINGBLOW)
+	{
+		if (m_Frame >= 10)
+			m_ActionFrame = 8.f;
+
+		else if (m_Frame >= 9)
+			m_ActionFrame = 7.f;
+
+		else if (m_Frame >= 8)
+			m_ActionFrame = 6.f;
+
+		else if (m_Frame >= 7)
+			m_ActionFrame = 5.f;
+
+		else if (m_Frame >= 6)
+			m_ActionFrame = 4.f;
+
+		else if (m_Frame >= 5)
+			m_ActionFrame = 3.f;
+
+		else if (m_Frame >= 3)
+			m_ActionFrame = 2.f;
+
+		else if (m_Frame >= 2)
+			m_ActionFrame = 1.f;
+
+		else
+			m_ActionFrame = 0.f;
+	}
 }
