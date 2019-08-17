@@ -15,7 +15,7 @@ Player::~Player()
 
 bool Player::Initialize()
 {
-	if (GET_INSTANCE(D2DManager)->CreateTexture("Player", ImageInfo(L"../Resource/Textures/Character/PinkBin2.png", 828, 126, 6, 1, 0, 0, 100, 100)) == false)
+	if (GET_INSTANCE(D2DManager)->CreateTexture("Player", ImageInfo(L"../Resource/Textures/Character/PinkBin.png", 1308, 206, 6, 1, 0, 0, 150, 160)) == false)
 		return false;
 
 	m_Speed = 0.5f;
