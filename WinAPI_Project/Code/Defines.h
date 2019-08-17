@@ -44,8 +44,8 @@ using namespace std;
 using namespace DirectX;
 
 
-constexpr int FRAME_BUFFER_WIDTH = 800;
-constexpr int FRAME_BUFFER_HEIGHT = 600;
+constexpr int FRAME_BUFFER_WIDTH = 1024;
+constexpr int FRAME_BUFFER_HEIGHT = 768;
 
 namespace Matrix4x4
 {

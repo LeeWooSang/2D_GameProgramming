@@ -1,6 +1,7 @@
 #include "InGameScene.h"
 #include "../../Macro.h"
 #include "../../GameObject/Map/Map.h"
+#include "../../GameObject/Monster/Monster.h"
 #include "../../GameObject/Player/Player.h"
 #include "../../GameObject/UI/Chat/Chat.h"
 #include "../../Camera/Camera.h"
@@ -23,6 +24,11 @@ bool InGameScene::Initialize()
 	if (pMap->Initialize() == false)
 		return false;
 	m_ObjectList.emplace_back(pMap);
+
+	Monster* pMonster = new Monster;
+	if (pMonster->Initialize() == false)
+		return false;
+	m_ObjectList.emplace_back(pMonster);
 
 	Chat* pChatUI = new Chat;
 	if (pChatUI->Initialize() == false)

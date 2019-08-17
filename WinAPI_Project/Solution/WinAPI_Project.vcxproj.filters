@@ -51,6 +51,9 @@
     <Filter Include="Code\Camera">
       <UniqueIdentifier>{91f0222d-0de5-4a50-8045-8764455ee8fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Code\GameObject\Monster">
+      <UniqueIdentifier>{f4b1b412-712e-4f5c-bf89-fafd6942c57f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Main.cpp">
@@ -100,6 +103,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Camera\Camera.cpp">
       <Filter>Code\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GameObject\Monster\Monster.cpp">
+      <Filter>Code\GameObject\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +165,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\Camera\Camera.h">
       <Filter>Code\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\GameObject\Monster\Monster.h">
+      <Filter>Code\GameObject\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

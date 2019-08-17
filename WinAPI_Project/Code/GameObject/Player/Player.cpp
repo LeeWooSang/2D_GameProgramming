@@ -19,21 +19,6 @@ Player::~Player()
 
 bool Player::Initialize()
 {
-	if (GET_INSTANCE(D2DManager)->CreateTexture("Idle", ImageInfo(L"../Resource/Textures/Character/Pinkbin_Idle.png", 720, 120, ANIMATION_FRAME::IDLE_FRAME, 1, 0, 0, 150, 150)) == false)
-
-		return false;
-	m_AnimationMap.emplace(ANIMATION::IDLE, ANIMATION_FRAME::IDLE_FRAME);
-
-	if (GET_INSTANCE(D2DManager)->CreateTexture("Break", ImageInfo(L"../Resource/Textures/Character/Pinkbin_Break.png", 3770, 130, ANIMATION_FRAME::BREAK_FRAME, 1, 0, 0, 150, 150)) == false)
-		return false;
-
-	m_AnimationMap.emplace(ANIMATION::BREAK, ANIMATION_FRAME::BREAK_FRAME);
-
-	if (GET_INSTANCE(D2DManager)->CreateTexture("Die", ImageInfo(L"../Resource/Textures/Character/Pinkbin_Die.png", 9570, 105, ANIMATION_FRAME::DIE_FRAME, 1, 0, 0, 150, 150)) == false)
-		return false;
-
-	m_AnimationMap.emplace(ANIMATION::DIE, ANIMATION_FRAME::DIE_FRAME);
-
 	if (GET_INSTANCE(D2DManager)->CreateTexture("Action", ImageInfo(L"../Resource/Textures/Character/Action.png", 900, 100, ANIMATION_FRAME::ACTION_FRAME, 1, 0, 0, 150, 150)) == false)
 		return false;
 
@@ -94,7 +79,6 @@ void Player::Update(float elapsedTime)
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
 	{
 		dir |= DIRECTION::RIGHT;
-		animation |= ANIMATION::BREAK;
 
 		m_WorldPosition.x += moveSize;
 		if (m_WorldPosition.x >= gap)
@@ -106,7 +90,6 @@ void Player::Update(float elapsedTime)
 	else if (GetAsyncKeyState(VK_LEFT) & 0x8000)
 	{
 		dir |= DIRECTION::LEFT;
-		animation |= ANIMATION::BREAK;
 
 		m_WorldPosition.x -= moveSize;
 		if (m_WorldPosition.x <= -gap)
@@ -163,7 +146,6 @@ void Player::ProcessAnimation(char animation, float elapsedTime)
 		switch (m_PrevAnimation)
 		{
 		case ANIMATION::IDLE:					m_AnimationName = "Idle";		break;
-		case ANIMATION::BREAK:					m_AnimationName = "Break";	break;
 		case ANIMATION::RAGINGBLOW:	m_AnimationName = "RagingBlow";	break;
 		default:	
 			break;
