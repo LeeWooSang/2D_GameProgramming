@@ -42,7 +42,7 @@ void InGameScene::Update(float elapsedTime)
 		(*iter)->Update(elapsedTime);
 
 	m_Player->Update(elapsedTime);
-	cout << m_Player->GetWorldPosition().x << ", " << m_Player->GetWorldPosition().y << endl;
+	//cout << m_Player->GetWorldPosition().x << ", " << m_Player->GetWorldPosition().y << endl;
 }
 
 void InGameScene::Render()
