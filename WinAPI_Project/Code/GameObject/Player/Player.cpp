@@ -132,8 +132,18 @@ void Player::Update(float elapsedTime)
 
 void Player::Render()
 {
+	D2D1_POINT_2F center = D2D1::Point2F(FRAME_BUFFER_WIDTH * 0.5, FRAME_BUFFER_HEIGHT * 0.5f);
+
+	D2D1::Matrix3x2F symmetryMatrix = D2D1::Matrix3x2F::Scale(-1, 1, center);
+	GET_INSTANCE(D2DManager)->GetRenderTarget()->SetTransform(symmetryMatrix);
+
 	GET_INSTANCE(D2DManager)->Render("Action", m_WorldPosition, static_cast<int>(m_ActionFrame), 0);
 	GET_INSTANCE(D2DManager)->Render(m_AnimationName, m_WorldPosition, static_cast<int>(m_Frame), 0);
+
+	cout << m_WorldPosition.x << ", " << m_WorldPosition.y << endl;
+
+	symmetryMatrix = D2D1::Matrix3x2F::Scale(1, 1, center);
+	GET_INSTANCE(D2DManager)->GetRenderTarget()->SetTransform(symmetryMatrix);
 }
 
 void Player::Release()
