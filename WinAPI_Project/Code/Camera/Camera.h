@@ -1,6 +1,7 @@
 #pragma once
 #include "../Macro.h"
 #include "../Defines.h"
+#include "../Network/Network.h"
 
 constexpr float ASPECT_RATIO = float(FRAME_BUFFER_WIDTH) / float(FRAME_BUFFER_HEIGHT);
 
@@ -9,7 +10,9 @@ class Camera
 	SINGLE_TONE(Camera)
 
 	bool Initialize();
-	void Update(float);
+	void Update(char, float);
+	bool Move(const XMFLOAT2&);
+
 	void GenerateProjectionMatrix(float, float, float, float);
 
 	const D3D12_VIEWPORT& GetViewPort()	const { return m_ViewPort; }

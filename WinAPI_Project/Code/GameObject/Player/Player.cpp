@@ -37,7 +37,7 @@ void Player::Update(float elapsedTime)
 	char dir = DIRECTION::IDLE;
 	float gap = 0.9f;
 	
-	XMFLOAT2 cameraPos = GET_INSTANCE(Camera)->GetWorldPosition();
+	XMFLOAT2 pos = m_WorldPosition;
 
 	if (GetAsyncKeyState(VK_UP) & 0x8000)
 	{
@@ -46,7 +46,7 @@ void Player::Update(float elapsedTime)
 		if (m_WorldPosition.y >= gap)
 			m_WorldPosition.y = gap;
 
-		GET_INSTANCE(Camera)->SetWorldPosition(XMFLOAT2(cameraPos.x, cameraPos.y - moveSize));
+		//GET_INSTANCE(Camera)->SetWorldPosition(XMFLOAT2(cameraPos.x, cameraPos.y - moveSize));
 	}
 
 	else if (GetAsyncKeyState(VK_DOWN) & 0x8000)
@@ -56,7 +56,7 @@ void Player::Update(float elapsedTime)
 		if (m_WorldPosition.y <= -gap)
 			m_WorldPosition.y = -gap;
 
-		GET_INSTANCE(Camera)->SetWorldPosition(XMFLOAT2(cameraPos.x, cameraPos.y + moveSize));
+		//GET_INSTANCE(Camera)->SetWorldPosition(XMFLOAT2(cameraPos.x, cameraPos.y + moveSize));
 	}
 
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
@@ -66,7 +66,7 @@ void Player::Update(float elapsedTime)
 		if (m_WorldPosition.x >= gap)
 			m_WorldPosition.x = gap;
 
-		GET_INSTANCE(Camera)->SetWorldPosition(XMFLOAT2(cameraPos.x - moveSize, cameraPos.y));
+		//GET_INSTANCE(Camera)->SetWorldPosition(XMFLOAT2(cameraPos.x - moveSize, cameraPos.y));
 	}
 
 	else if (GetAsyncKeyState(VK_LEFT) & 0x8000)
@@ -76,13 +76,14 @@ void Player::Update(float elapsedTime)
 		if (m_WorldPosition.x <= -gap)
 			m_WorldPosition.x = -gap;
 
-		GET_INSTANCE(Camera)->SetWorldPosition(XMFLOAT2(cameraPos.x + moveSize, cameraPos.y));
+		//GET_INSTANCE(Camera)->SetWorldPosition(XMFLOAT2(cameraPos.x + moveSize, cameraPos.y));
 	}
 	
-	//GET_INSTANCE(Camera)->Update(elapsedTime);
-
-	//if(dir != DIRECTION::IDLE)
-	//	GET_INSTANCE(Network)->Send_Move_Packet(dir);
+	GET_INSTANCE(Camera)->Update(dir, moveSize);
+	if (dir != DIRECTION::IDLE)
+	{
+		//GET_INSTANCE(Network)->Send_Move_Packet(dir);
+	}
 }
 
 void Player::Render()

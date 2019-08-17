@@ -1,6 +1,7 @@
 #include "Camera.h"
 #include "../GameObject/GameObject.h"
 #include "../Network/Network.h"
+#include "../D2DManager/D2DManager.h"
 
 INIT_INSTACNE(Camera)
 
@@ -23,13 +24,28 @@ bool Camera::Initialize()
 	return true;
 }
 
-void Camera::Update(float elapsedTime)
+void Camera::Update(char dir, float elapsedTime)
 {
 	if (m_Target)
 	{
 		XMFLOAT2 pos = m_Target->GetWorldPosition();
-		m_WorldPosition.x -= pos.x * elapsedTime;
-		m_WorldPosition.y -= pos.x * elapsedTime;
+
+		if (Move(pos) == false)
+			return;
+
+		if (dir & DIRECTION::RIGHT)
+			m_WorldPosition.x -= elapsedTime;
+	
+		else if (dir & DIRECTION::LEFT)
+			m_WorldPosition.x += elapsedTime;
+
+		if (dir & DIRECTION::UP)
+			pos.y -= elapsedTime;
+
+		else if (dir & DIRECTION::DOWN)
+			pos.y += elapsedTime;
+
+		//m_WorldPosition = pos;
 
 		//float size = 0.5f;
 
@@ -57,6 +73,23 @@ void Camera::Update(float elapsedTime)
 
 		//m_WorldPosition = pos;
 	}
+}
+
+bool Camera::Move(const XMFLOAT2& pos)
+{
+	if (pos.x > 0.3f)
+		return true;
+
+	if (pos.x < -0.3f)
+		return true;
+
+	if (pos.y > 0.3f)
+		return true;
+
+	if (pos.y < -0.3f)
+		return true;
+
+	return false;
 }
 
 void Camera::GenerateProjectionMatrix(float nearPlaneDistance, float farPlaneDistance, float aspectRatio, float fOVAngle)
