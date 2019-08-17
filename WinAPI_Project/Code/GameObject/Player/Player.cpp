@@ -15,7 +15,7 @@ Player::~Player()
 
 bool Player::Initialize()
 {
-	if (GET_INSTANCE(D2DManager)->CreateTexture("Player", ImageInfo(L"../Resource/Textures/Character/PinkBin.png", 1308, 206, 6, 1, 0, 0, 150, 160)) == false)
+	if (GET_INSTANCE(D2DManager)->CreateTexture("Player", ImageInfo(L"../Resource/Textures/Character/Pinkbin_IDLE.png", 720, 120, 6, 1, 0, 0, 120, 120)) == false)
 		return false;
 
 	m_Speed = 0.5f;
@@ -27,7 +27,7 @@ bool Player::Initialize()
 
 void Player::Update(float elapsedTime)
 {
-	if (m_Frame < 6)
+	if (m_Frame <= 6)
 		m_Frame += elapsedTime * 5;
 	else
 		m_Frame = 0.f;
